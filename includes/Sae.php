@@ -9,7 +9,7 @@ class SAE_Sae extends DiviExtension {
 	 *
 	 * @var string
 	 */
-	public $gettext_domain = 'sae-sae';
+	public $gettext_domain = 'sae';
 
 	/**
 	 * The extension's WP Plugin name.

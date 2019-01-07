@@ -12,16 +12,16 @@ class SAE_HelloWorld extends ET_Builder_Module {
 	);
 
 	public function init() {
-		$this->name = esc_html__( 'Hello World', 'sae-sae' );
+		$this->name = esc_html__( 'Hello World', 'sae' );
 	}
 
 	public function get_fields() {
 		return array(
 			'content' => array(
-				'label'           => esc_html__( 'Content', 'sae-sae' ),
+				'label'           => esc_html__( 'Content', 'sae' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'Content entered here will appear inside the module.', 'sae-sae' ),
+				'description'     => esc_html__( 'Content entered here will appear inside the module.', 'sae' ),
 				'toggle_slug'     => 'main_content',
 			),
 		);
