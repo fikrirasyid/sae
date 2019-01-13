@@ -19,8 +19,22 @@ class SAE_Gallery extends ET_Builder_Module {
 		$this->settings_modal_toggles  = array(
 			'general'  => array(
 				'toggles' => array(
-					'main_content' => esc_html__( 'Content', 'sae' ),
-					'elements'     => esc_html__( 'Elements', 'sae' ),
+					'main_content' => array(
+						'title'    => esc_html__( 'Content', 'sae' ),
+						'priority' => 10,
+					),
+				),
+			),
+			'advanced' => array(
+				'toggles' => array(
+					'layout' => array(
+						'title'    => esc_html__( 'Layout', 'sae' ),
+						'priority' => 10,
+					),
+					'column' => array(
+						'title'    => esc_html__( 'Column', 'sae' ),
+						'priority' => 20,
+					),
 				),
 			),
 		);
@@ -39,8 +53,8 @@ class SAE_Gallery extends ET_Builder_Module {
 				),
 				'default'         => 'grid',
 				'description'     => esc_html__( '', 'sae' ),
-				'tab_slug'        => 'general',
-				'toggle_slug'     => 'elements',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'layout',
 			),
 			'column' => array(
 				'label'           => esc_html__( 'Gallery Column', 'sae' ),
@@ -56,8 +70,8 @@ class SAE_Gallery extends ET_Builder_Module {
 				),
 				'default'         => '3',
 				'description'     => esc_html__( '', 'sae' ),
-				'tab_slug'        => 'general',
-				'toggle_slug'     => 'elements',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'column',
 				'show_if'         => array(
 					'layout'      => array(
 						'grid',
