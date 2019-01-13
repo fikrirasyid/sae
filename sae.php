@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Sae
-Plugin URI:  
-Description: Beautiful gallery and progressive image modules for Divi
+Plugin URI:
+Description: Experimental gallery and progressive image modules for Divi that spark joy
 Version:     1.0.0
 Author:      Fikri Rasyid
 Author URI:  http://fikrirasy.id
