@@ -43,35 +43,54 @@ class SAE_Gallery extends ET_Builder_Module {
 	public function get_fields() {
 		return array(
 			'layout' => array(
+				// UI
 				'label'           => esc_html__( 'Gallery Layout', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
 				'type'            => 'select',
-				'option_category' => 'layout',
 				'options'         => array(
 					'grid'     => esc_html__( 'Grid', 'sae' ),
 					'masonry'  => esc_html__( 'Masonry', 'sae' ),
 					'carousel' => esc_html__( 'Carousel', 'sae' ),
 				),
+
+				// Defaults
 				'default'         => 'grid',
-				'description'     => esc_html__( '', 'sae' ),
+
+				// Category & Location
+				'option_category' => 'layout',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'layout',
 			),
 			'column' => array(
+				// UI
 				'label'           => esc_html__( 'Gallery Column', 'sae' ),
-				'type'            => 'select',
-				'option_category' => 'layout',
-				'options'         => array(
-					'1' => esc_html__( '1', 'sae' ),
-					'2' => esc_html__( '2', 'sae' ),
-					'3' => esc_html__( '3', 'sae' ),
-					'4' => esc_html__( '4', 'sae' ),
-					'5' => esc_html__( '5', 'sae' ),
-					'6' => esc_html__( '6', 'sae' ),
-				),
-				'default'         => '3',
 				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'range',
+				'allow_empty'     => false,
+				'mobile_options'  => true,
+				'range_settings'  => array(
+					'min'       => 1,
+					'max'       => 10,
+					'min_limit' => 1,
+					'max_limit' => 10,
+					'step'      => 1,
+				),
+				'responsive'      => true,
+				'validate_unit'   => false,
+
+				// Defaults
+				'default'         => 3,
+
+				// Category & Location
+				'option_category' => 'layout',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'column',
+
+				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
 						'grid',
