@@ -68,6 +68,22 @@ class SAE_Gallery extends ET_Builder_Module {
 		);
 	}
 
+	public function set_css( $render_slug ) {
+		// Masonry layout style
+		if ( 'masonry' === $this->props['layout'] ) {
+			// Column
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% .sae-gallery-wrapper',
+				'declaration' => sprintf(
+					'-webkit-column-count: %1$s;
+					-moz-column-count: %1$s;
+					column-count: %1$s;',
+					esc_html( $this->props['column'] )
+				),
+			) );
+		}
+	}
+
 	public function render( $attrs, $content = null, $render_slug ) {
 		// Wrapper classnames
 		$wrapper_classnames = array(
@@ -84,6 +100,9 @@ class SAE_Gallery extends ET_Builder_Module {
 
 			$wrapper_data_attrs['column'] = $this->props['column'];
 		}
+
+		// Set styles
+		$this->set_css( $render_slug );
 
 		// Rendered attributes
 		$rendered_wrapper_classnames = implode( ' ', $wrapper_classnames );
