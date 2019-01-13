@@ -25,6 +25,16 @@ class SaeGallery extends Component {
           -moz-column-count: ${props.column};
           column-count: ${props.column};`,
       }]);
+
+      // Column gutter width
+      if ('' !== props.column_gutter_width) {
+        additionalCss.push([{
+          selector: '%%order_class%% .sae-gallery-wrapper',
+          declaration: `-webkit-column-gap: ${props.column_gutter_width};
+            -moz-column-gap: ${props.column_gutter_width};
+            column-gap: ${props.column_gutter_width};`,
+        }]);
+      }
     }
 
     return additionalCss;

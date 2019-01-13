@@ -98,6 +98,43 @@ class SAE_Gallery extends ET_Builder_Module {
 					),
 				),
 			),
+			'column_gutter_width' => array(
+				// UI
+				'label'           => esc_html__( 'Gallery Column Gutter Width', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'range',
+				'allow_empty'     => true,
+				'mobile_options'  => true,
+				'range_settings'  => array(
+					'min'  => '0',
+					'max'  => '100',
+					'step' => '1',
+				),
+				'responsive'      => true,
+				'validate_unit'   => true,
+
+				// Defaults
+				'default'         => '',
+				'default_unit'    => 'px',
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'column',
+
+				// Visibility
+				'show_if'         => array(
+					'layout'      => array(
+						'grid',
+						'masonry',
+					),
+				),
+				'show_if_not'     => array(
+					'column' => '1',
+				),
+			),
 		);
 	}
 
@@ -114,6 +151,19 @@ class SAE_Gallery extends ET_Builder_Module {
 					esc_html( $this->props['column'] )
 				),
 			) );
+
+			// Column Gutter Width
+			if ( '' !== $this->props['column_gutter_width'] ) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => '%%order_class%% .sae-gallery-wrapper',
+					'declaration' => sprintf(
+						'-webkit-column-gap: %1$s;
+						-moz-column-gap: %1$s;
+						column-gap: %1$s;',
+						esc_html( $this->props['column_gutter_width'] )
+					),
+				) );
+			}
 		}
 	}
 
