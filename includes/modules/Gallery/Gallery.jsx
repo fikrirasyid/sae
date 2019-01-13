@@ -17,19 +17,21 @@ class SaeGallery extends Component {
    */
   static css(props) {
     const additionalCss = [];
+    const hasCustomColumnGutterWidth = '' !== props.column_gutter_width;
+    const column = parseFloat(props.column);
 
     // Masonry layout style
     if ('masonry' === props.layout) {
       // Column
       additionalCss.push([{
         selector: '%%order_class%% .sae-gallery-wrapper',
-        declaration: `-webkit-column-count: ${props.column};
-          -moz-column-count: ${props.column};
-          column-count: ${props.column};`,
+        declaration: `-webkit-column-count: ${column};
+          -moz-column-count: ${column};
+          column-count: ${column};`,
       }]);
 
       // Column gutter width
-      if ('' !== props.column_gutter_width) {
+      if (hasCustomColumnGutterWidth) {
         additionalCss.push([{
           selector: '%%order_class%% .sae-gallery-wrapper',
           declaration: `-webkit-column-gap: ${props.column_gutter_width};
@@ -37,6 +39,22 @@ class SaeGallery extends Component {
             column-gap: ${props.column_gutter_width};`,
         }]);
       }
+    }
+
+    // Grid layout style
+    if ('grid' === props.layout) {
+      let gridWidth = `${(100 / column)}%`;
+
+      // Grid width need to be modified if custom column gutter width is defined
+      if (hasCustomColumnGutterWidth) {
+        const gridGutterScale = (column - 1) / column;
+        gridWidth = `calc(${gridWidth} - (${props.column_gutter_width} * ${gridGutterScale}))`;
+      }
+
+      additionalCss.push([{
+        selector: '%%order_class%% .sae-gallery-wrapper .sae_gallery_item',
+        declaration: `flex-basis: ${gridWidth};`,
+      }]);
     }
 
     return additionalCss;

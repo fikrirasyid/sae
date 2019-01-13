@@ -139,6 +139,9 @@ class SAE_Gallery extends ET_Builder_Module {
 	}
 
 	public function set_css( $render_slug ) {
+		$has_column_gutter_width = '' !== $this->props['column_gutter_width'];
+		$column                  = intval( $this->props['column'] );
+
 		// Masonry layout style
 		if ( 'masonry' === $this->props['layout'] ) {
 			// Column
@@ -148,12 +151,12 @@ class SAE_Gallery extends ET_Builder_Module {
 					'-webkit-column-count: %1$s;
 					-moz-column-count: %1$s;
 					column-count: %1$s;',
-					esc_html( $this->props['column'] )
+					esc_html( $column )
 				),
 			) );
 
 			// Column Gutter Width
-			if ( '' !== $this->props['column_gutter_width'] ) {
+			if ( $has_column_gutter_width ) {
 				ET_Builder_Element::set_style( $render_slug, array(
 					'selector'    => '%%order_class%% .sae-gallery-wrapper',
 					'declaration' => sprintf(
@@ -164,6 +167,25 @@ class SAE_Gallery extends ET_Builder_Module {
 					),
 				) );
 			}
+		}
+
+		// Grid layout style
+		if ( 'grid' === $this->props['layout'] ) {
+			$grid_width = ( 100 / $column ) . '%';
+
+			// Grid width need to be modified if custom column gutter width is defined
+			if ( $has_column_gutter_width ) {
+				$grid_gutter_scale = ($column - 1) / $column;
+				$grid_width = "calc({$grid_width} - ({$this->props['column_gutter_width']} * {$grid_gutter_scale}))";
+			}
+
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% .sae-gallery-wrapper .sae_gallery_item',
+				'declaration' => sprintf(
+					'flex-basis: %1$s;',
+					esc_html( $grid_width )
+				),
+			) );
 		}
 	}
 
