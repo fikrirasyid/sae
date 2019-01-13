@@ -1,5 +1,8 @@
 // External Dependencies
 import React, { Component } from 'react';
+import {
+  includes
+} from 'lodash';
 
 class SaeGallery extends Component {
 
@@ -13,7 +16,6 @@ class SaeGallery extends Component {
    * @return array
    */
   static css(props) {
-    const utils         = window.ET_Builder.API.Utils;
     const additionalCss = [];
 
     // Masonry layout style
@@ -44,8 +46,26 @@ class SaeGallery extends Component {
    * Module render in VB
    */
   render() {
+    const utils = window.ET_Builder.API.Utils;
+
+    // Wrapper classname
+    const wrapperClassname = [
+      'sae-gallery-wrapper',
+      `sae-gallery-layout-${this.props.layout}`,
+    ];
+
+    // Wrapper data attributes
+    const wrapperDataAttrs = {};
+
+    // Column classnames & data attribute
+    if (includes(['grid', 'masonry'], this.props.layout)) {
+      wrapperClassname.push(`sae-gallery-column-${this.props.column}`);
+
+      wrapperDataAttrs['data-sae-column'] = this.props.column;
+    }
+
     return (
-      <div className="sae-gallery-wrapper">
+      <div className={utils.classnames(wrapperClassname)} {...wrapperDataAttrs}>
         {this.props.content}
       </div>
     );
