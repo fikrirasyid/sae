@@ -1,5 +1,8 @@
 // External Dependencies
 import React, { Component } from 'react';
+import {
+  get,
+} from 'lodash';
 
 
 class SaeGalleryItem extends Component {
@@ -10,11 +13,14 @@ class SaeGalleryItem extends Component {
    * Module render in VB
    */
   render() {
+    const caption = '' === get(this.props.content(), 'props.content') ? false : <div className="sae-gallery-item-caption">
+      {this.props.content()}
+    </div>;
+
     return (
       <div className="sae-gallery-item-wrapper">
         <img src={this.props.src} alt={this.props.title} />
-        <h4 className="sae-gallery-item-title">{this.props.title}</h4>
-        <div className="sae-gallery-item-description">{this.props.content()}</div>
+        {caption}
       </div>
     );
   }
