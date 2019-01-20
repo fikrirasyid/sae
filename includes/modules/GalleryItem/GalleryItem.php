@@ -88,7 +88,78 @@ class SAE_GalleryItem extends ET_Builder_Module {
 	}
 
 	public function render( $attrs, $content = null, $render_slug ) {
-		$src     = $this->props['src'];
+		// Image configuration
+		$src                       = $this->props['src'];
+		$image_id                  = attachment_url_to_postid( $src ) ;
+		$image_classnames          = array();
+		$rendered_image_data_attrs = '';
+		$is_placeholder            = false;
+
+		// Populate progressive image attributes if attachment id is found
+		if ( $image_id ) {
+			$sae_images_metadata = wp_get_attachment_metadata( $image_id );
+			$sae_image_url       = wp_get_attachment_url( $image_id );
+			$sae_image_basename  = wp_basename( $sae_image_url );
+			$sae_image_sizes     = array();
+
+			foreach ( $sae_images_metadata['sizes'] as $image_size_name => $image_size ) {
+				// Only deal with sae-defined image sizes
+				if ( 'sae_' !== substr( $image_size_name, 0, 4 ) ) {
+					continue;
+				}
+
+				$image_size_width = (string) $image_size['width'];
+				$image_size_url   = str_replace( $sae_image_basename, $image_size['file'], $sae_image_url );
+
+				// Replace rendered image src with placeholder URL
+				if ( 'sae_placeholder' === $image_size_name ) {
+					// Append original size as 10000 (similar to how height 10000 is used for "auto" height)
+					$rendered_image_data_attrs .= sprintf(
+						' data-sae-src-width-10000="%1$s"',
+						esc_attr( $src )
+					);
+
+					$sae_image_sizes[] = '10000';
+
+					// Replace src attribute with placeholder size
+					$src            = $image_size_url;
+					$is_placeholder = true;
+
+					// No need to add 150 size (placeholder) image into tag data attributes
+					continue;
+				}
+
+				// Add image URL as data attribute
+				$rendered_image_data_attrs .= sprintf(
+					' data-sae-src-width-%1$s="%2$s"',
+					esc_attr( $image_size_width ),
+					esc_attr( $image_size_url )
+				);
+
+				$sae_image_sizes[] = $image_size_width;
+			}
+
+			// Append image sizes data attribute
+			if ( ! empty( $sae_image_sizes ) ) {
+				$rendered_image_data_attrs .= sprintf(
+					' data-sae-image-width="%1$s"',
+					esc_attr( implode( ',', $sae_image_sizes ) )
+				);
+			}
+		}
+
+		if ( $is_placeholder ) {
+			$image_classnames[] = 'sae-image--placeholder';
+
+			// Make sure placeholder fill the wrapper as soon as it can
+			$rendered_image_data_attrs .= ' style="width: 100%;"';
+		} else {
+			$image_classnames[] = 'sae-image';
+		}
+
+		$rendered_image_classnames = implode( ' ', $image_classnames );
+
+		// Caption configuration
 		$content = '' === $this->content ? '' : sprintf(
 			'<div class="sae-gallery-item-caption">%1$s</div>',
 			et_sanitized_previously( $this->props['content'] )
@@ -96,11 +167,15 @@ class SAE_GalleryItem extends ET_Builder_Module {
 
 		return sprintf(
 			'<div class="sae-gallery-item-wrapper">
-				<img src="%1$s" alt="%2$s" />
-				%3$s
+				<div class="sae-gallery-item-image-wrapper">
+					<img src="%1$s" alt="%2$s" class="%3$s"%4$s />
+				</div>
+				%5$s
 			</div>',
 			esc_attr( $src ),
 			esc_attr( $this->props['content'] ),
+			esc_attr( $rendered_image_classnames ),
+			et_sanitized_previously( $rendered_image_data_attrs ),
 			'' === $this->props['content'] ? '' : et_sanitized_previously( $content )
 		);
 	}

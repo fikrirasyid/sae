@@ -19,7 +19,9 @@ class SaeGalleryItem extends Component {
 
     return (
       <div className="sae-gallery-item-wrapper">
-        <img src={this.props.src} alt={this.props.title} />
+        <div className="sae-gallery-item-image-wrapper">
+          <img src={this.props.src} alt={this.props.title} />
+        </div>
         {caption}
       </div>
     );
