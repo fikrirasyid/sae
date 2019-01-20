@@ -38,6 +38,9 @@ class SAE_Gallery extends ET_Builder_Module {
 				),
 			),
 		);
+		$this->advanced_fields         = array(
+			'link_options' => false,
+		);
 	}
 
 	public function get_fields() {
