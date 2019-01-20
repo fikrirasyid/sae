@@ -41,22 +41,6 @@ class SaeGallery extends Component {
       }
     }
 
-    // Grid layout style
-    if ('grid' === props.layout) {
-      let gridWidth = `${(100 / column)}%`;
-
-      // Grid width need to be modified if custom column gutter width is defined
-      if (hasCustomColumnGutterWidth) {
-        const gridGutterScale = (column - 1) / column;
-        gridWidth = `calc(${gridWidth} - (${props.column_gutter_width} * ${gridGutterScale}))`;
-      }
-
-      additionalCss.push([{
-        selector: '%%order_class%% .sae-gallery-wrapper .sae_gallery_item',
-        declaration: `flex-basis: ${gridWidth};`,
-      }]);
-    }
-
     return additionalCss;
   }
 
@@ -76,7 +60,7 @@ class SaeGallery extends Component {
     const wrapperDataAttrs = {};
 
     // Column classnames & data attribute
-    if (includes(['grid', 'masonry'], this.props.layout)) {
+    if (includes(['masonry'], this.props.layout)) {
       wrapperClassname.push(`sae-gallery-column-${this.props.column}`);
 
       wrapperDataAttrs['data-sae-column'] = this.props.column;

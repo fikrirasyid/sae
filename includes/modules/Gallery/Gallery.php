@@ -58,13 +58,12 @@ class SAE_Gallery extends ET_Builder_Module {
 				// Settings
 				'type'            => 'select',
 				'options'         => array(
-					'grid'     => esc_html__( 'Grid', 'sae' ),
 					'masonry'  => esc_html__( 'Masonry', 'sae' ),
-					'carousel' => esc_html__( 'Carousel', 'sae' ),
+					'plain'    => esc_html__( 'Plain', 'sae' ),
 				),
 
 				// Defaults
-				'default'         => 'grid',
+				'default'         => 'masonry',
 
 				// Category & Location
 				'option_category' => 'layout',
@@ -103,7 +102,6 @@ class SAE_Gallery extends ET_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
-						'grid',
 						'masonry',
 					),
 				),
@@ -137,7 +135,6 @@ class SAE_Gallery extends ET_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
-						'grid',
 						'masonry',
 					),
 				),
@@ -167,7 +164,6 @@ class SAE_Gallery extends ET_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
-						'grid',
 						'masonry',
 					),
 				),
@@ -205,25 +201,6 @@ class SAE_Gallery extends ET_Builder_Module {
 				) );
 			}
 		}
-
-		// Grid layout style
-		if ( 'grid' === $this->props['layout'] ) {
-			$grid_width = ( 100 / $column ) . '%';
-
-			// Grid width need to be modified if custom column gutter width is defined
-			if ( $has_column_gutter_width ) {
-				$grid_gutter_scale = ($column - 1) / $column;
-				$grid_width = "calc({$grid_width} - ({$this->props['column_gutter_width']} * {$grid_gutter_scale}))";
-			}
-
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% .sae-gallery-wrapper .sae_gallery_item',
-				'declaration' => sprintf(
-					'flex-basis: %1$s;',
-					esc_html( $grid_width )
-				),
-			) );
-		}
 	}
 
 	public function render( $attrs, $content = null, $render_slug ) {
@@ -237,7 +214,7 @@ class SAE_Gallery extends ET_Builder_Module {
 		$wrapper_data_attrs = array();
 
 		// Column classnames & data attribute
-		if ( in_array( $this->props['layout'], array( 'grid', 'masonry' ) ) ) {
+		if ( in_array( $this->props['layout'], array( 'masonry' ) ) ) {
 			array_push( $wrapper_classnames, "sae-gallery-column-{$this->props['column']}" );
 
 			$wrapper_data_attrs['column'] = $this->props['column'];
