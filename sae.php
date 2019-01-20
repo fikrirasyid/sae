@@ -37,3 +37,37 @@ function sae_initialize_extension() {
 }
 add_action( 'divi_extensions_init', 'sae_initialize_extension' );
 endif;
+
+/**
+ * Sae image sizes for progressive image loading
+ *
+ * @since ??
+ *
+ * @return array
+ */
+function sae_image_sizes() {
+	return apply_filters( 'sae_image_sizes', array(
+		'placeholder'        => 150,
+		'phone_portrait'     => 375,
+		'tablet_portrait'    => 768,
+		'tablet_landscape'   => 1024,
+		'desktop_large'      => 1440,
+		'desktop_large_2x'   => 2880,
+	) );
+}
+
+/**
+ * Register image sizes for progresssive image loading
+ *
+ * @since ??
+ *
+ * @return void
+ */
+function sae_register_image_sizes() {
+	$image_sizes = sae_image_sizes();
+
+	foreach ( $image_sizes as $image_name => $image_width ) {
+		add_image_size( "sae_{$image_name}", $image_width, 10000 );
+	}
+}
+add_action( 'after_setup_theme', 'sae_register_image_sizes' );
