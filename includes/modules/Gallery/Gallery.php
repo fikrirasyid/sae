@@ -35,6 +35,10 @@ class SAE_Gallery extends ET_Builder_Module {
 						'title'    => esc_html__( 'Column', 'sae' ),
 						'priority' => 20,
 					),
+					'items' => array(
+						'title'    => esc_html__( 'Gallery Items', 'sae' ),
+						'priority' => 30,
+					),
 				),
 			),
 		);
@@ -45,6 +49,7 @@ class SAE_Gallery extends ET_Builder_Module {
 
 	public function get_fields() {
 		return array(
+			// Layout
 			'layout' => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Layout', 'sae' ),
@@ -66,6 +71,8 @@ class SAE_Gallery extends ET_Builder_Module {
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'layout',
 			),
+
+			// Column
 			'column' => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Column', 'sae' ),
@@ -136,6 +143,33 @@ class SAE_Gallery extends ET_Builder_Module {
 				),
 				'show_if_not'     => array(
 					'column' => '1',
+				),
+			),
+
+			// Gallery Items
+			'items_custom_margin' => array(
+				// UI
+				'label'           => esc_html__( 'Gallery Item Margin', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'items',
+
+				// Visibility
+				'show_if'         => array(
+					'layout'      => array(
+						'grid',
+						'masonry',
+					),
 				),
 			),
 		);
