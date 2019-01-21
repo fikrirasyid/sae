@@ -340,8 +340,8 @@ class SAE_Gallery extends ET_Builder_Module {
 		return sprintf(
 			'<div class="%1$s"%2$s>%3$s</div>',
 			esc_attr( $rendered_wrapper_classnames ),
-			et_sanitized_previously( $rendered_data_attrs ),
-			et_sanitized_previously( $this->content )
+			et_core_sanitized_previously( $rendered_data_attrs ),
+			et_core_sanitized_previously( $this->content )
 		);
 	}
 }

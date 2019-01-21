@@ -162,7 +162,7 @@ class SAE_GalleryItem extends ET_Builder_Module {
 		// Caption configuration
 		$content = '' === $this->content ? '' : sprintf(
 			'<div class="sae-gallery-item-caption">%1$s</div>',
-			et_sanitized_previously( $this->props['content'] )
+			et_core_sanitized_previously( $this->props['content'] )
 		);
 
 		return sprintf(
@@ -175,8 +175,8 @@ class SAE_GalleryItem extends ET_Builder_Module {
 			esc_attr( $src ),
 			esc_attr( $this->props['content'] ),
 			esc_attr( $rendered_image_classnames ),
-			et_sanitized_previously( $rendered_image_data_attrs ),
-			'' === $this->props['content'] ? '' : et_sanitized_previously( $content )
+			et_core_sanitized_previously( $rendered_image_data_attrs ),
+			'' === $this->props['content'] ? '' : et_core_sanitized_previously( $content )
 		);
 	}
 }
