@@ -43,6 +43,57 @@ class SAE_Gallery extends ET_Builder_Module {
 			),
 		);
 		$this->advanced_fields         = array(
+			'borders'      => array(
+				'default'  => array(),
+				'item'     => array(
+					// UI
+					'label_prefix'    => esc_html__( 'Gallery Item', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main' => array(
+							'border_radii'        => "%%order_class%% .sae_gallery_item",
+							'border_styles'       => "%%order_class%% .sae_gallery_item",
+							'border_styles_hover' => "%%order_class%% .sae_gallery_item:hover",
+						),
+					),
+
+					// Defaults
+					'defaults'        => array(
+						'border_radii'  => 'on||||',
+						'border_styles' => array(
+							'width' => '0px',
+							'color' => '#333333',
+							'style' => 'solid',
+						),
+					),
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'items',
+				),
+			),
+			'box_shadow'   => array(
+				'default' => array(),
+				'item'    => array(
+					// UI
+					'label'           => esc_html__( 'Gallery Item Box Shadow', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main'        => '%%order_class%% .sae_gallery_item',
+					),
+
+					// Defaults
+					'default'         => 'none',
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'items',
+				),
+			),
 			'link_options' => false,
 		);
 	}
@@ -144,7 +195,57 @@ class SAE_Gallery extends ET_Builder_Module {
 			),
 
 			// Gallery Items
-			'items_custom_margin' => array(
+			'item_background' => array(
+				//
+				'label'             => esc_html__( 'Item Background', 'sae' ),
+				'description'       => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'              => 'background-field',
+				'base_name'         => 'item_background',
+				'context'           => 'item_background',
+				'custom_color'      => true,
+				'background_fields' => $this->generate_background_options(
+					'item_background',
+					// Intentionally use color, gradient, and image ala button background
+					// only to keep things simple
+					'button',
+					'advanced',
+					'layout',
+					'item_background'
+				),
+
+				// Category & Location
+				'option_category'   => 'layout',
+				'tab_slug'          => 'advanced',
+				'toggle_slug'       => 'items',
+			),
+			'item_padding'    => array(
+				// UI
+				'label'           => esc_html__( 'Gallery Item Padding', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'items',
+
+				// Visibility
+				'show_if'         => array(
+					'layout'      => array(
+						'plain',
+						'masonry',
+					),
+				),
+			),
+			'item_margin'     => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Item Margin', 'sae' ),
 				'description'     => esc_html__( '', 'sae' ),
@@ -164,6 +265,7 @@ class SAE_Gallery extends ET_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
+						'plain',
 						'masonry',
 					),
 				),
