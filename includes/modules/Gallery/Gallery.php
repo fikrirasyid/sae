@@ -99,7 +99,7 @@ class SAE_Gallery extends ET_Builder_Module {
 	}
 
 	public function get_fields() {
-		return array(
+		$fields = array(
 			// Layout
 			'layout' => array(
 				// UI
@@ -195,7 +195,7 @@ class SAE_Gallery extends ET_Builder_Module {
 			),
 
 			// Gallery Items
-			'item_background' => array(
+			'item_background_color' => array(
 				//
 				'label'             => esc_html__( 'Item Background', 'sae' ),
 				'description'       => esc_html__( '', 'sae' ),
@@ -271,6 +271,23 @@ class SAE_Gallery extends ET_Builder_Module {
 				),
 			),
 		);
+
+		// background-field's fields need to be manually added as `skip` type of field so its value
+		// can be properly saved and fetched
+		$fields = array_merge(
+			$fields,
+			$this->generate_background_options(
+				'item_background',
+				// Intentionally use color, gradient, and image ala button background
+				// only to keep things simple
+				'skip',
+				'advanced',
+				'layout',
+				'item_background'
+			)
+		);
+
+		return $fields;
 	}
 
 	public function set_css( $render_slug ) {
@@ -302,6 +319,108 @@ class SAE_Gallery extends ET_Builder_Module {
 					),
 				) );
 			}
+		}
+
+		// GALLERY ITEM
+		// Gallery Item Background
+		$gallery_item_selector        = '%%order_class%% .sae_gallery_item';
+		$item_background_color        = self::$_->array_get( $this->props, 'item_background_color' );
+		$item_background_gradient_use = self::$_->array_get( $this->props, 'item_background_use_color_gradient', 'off' );
+		$item_background_image        = self::$_->array_get( $this->props, 'item_background_image' );
+		$item_background_images       = array();
+
+		// Gallery Item background color
+		if ($item_background_color) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => $gallery_item_selector,
+				'declaration' => "background-color: {$item_background_color};",
+			) );
+		}
+
+		// Prepare gallery item background gradient styles
+		if ( 'on' === $item_background_gradient_use ) {
+			$item_background_images[] = $this->get_gradient( array(
+				'type'             => self::$_->array_get( $this->props, 'item_background_color_gradient_type' ),
+				'direction'        => self::$_->array_get( $this->props, 'item_background_color_gradient_direction' ),
+				'radial_direction' => self::$_->array_get( $this->props, 'item_background_color_gradient_direction_radial' ),
+				'color_start'      => self::$_->array_get( $this->props, 'item_background_color_gradient_start' ),
+				'color_end'        => self::$_->array_get( $this->props, 'item_background_color_gradient_end' ),
+				'start_position'   => self::$_->array_get( $this->props, 'item_background_color_gradient_start_position' ),
+				'end_position'     => self::$_->array_get( $this->props, 'item_background_color_gradient_end_position' ),
+			) );
+		}
+
+		// Prepare & add gallery item background image styles
+		if ( $item_background_image ) {
+			$item_background_images[] = "url({$item_background_image})";
+
+			$item_background_size     = self::$_->array_get( $this->props, 'item_background_size' );
+			$item_background_position = self::$_->array_get( $this->props, 'item_background_position', '' );
+			$item_background_repeat   = self::$_->array_get( $this->props, 'item_background_repeat' );
+			$item_background_blend    = self::$_->array_get( $this->props, 'item_background_blend' );
+
+			if ($item_background_size) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $gallery_item_selector,
+					'declaration' => sprintf(
+						'background-size: %1$s; ',
+						esc_html( $item_background_size )
+					),
+				) );
+			}
+
+			if ($item_background_position) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $gallery_item_selector,
+					'declaration' => sprintf(
+						'background-position: %1$s; ',
+						esc_html( str_replace( '_', ' ', $item_background_position ) )
+					),
+				) );
+			}
+
+			if ($item_background_repeat) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $gallery_item_selector,
+					'declaration' => sprintf(
+						'background-repeat: %1$s; ',
+						esc_html( $item_background_repeat )
+					),
+				) );
+			}
+
+			if ($item_background_blend) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $gallery_item_selector,
+					'declaration' => sprintf(
+						'background-blend-mode: %1$s; ',
+						esc_html( $item_background_blend )
+					),
+				) );
+			}
+
+			// Background image and gradient exist
+			if ( count( $item_background_images ) > 1 && $item_background_blend && 'normal' !== $item_background_blend ) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $gallery_item_selector,
+					'declaration' => 'background-color: initial; ',
+				) );
+			}
+		}
+
+		// Add gallery item background gradient and image styles (both uses background-image property)
+		if ( ! empty( $item_background_images ) ) {
+			if ('on' !== self::$_->array_get( $this->props, 'item_background_color_gradient_overlays_image' ) ) {
+				array_reverse( $item_background_images );
+			}
+
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => $gallery_item_selector,
+				'declaration' => sprintf(
+					'background-image: %1$s; ',
+					esc_html( join( ', ', $item_background_images ) )
+				),
+			) );
 		}
 	}
 
