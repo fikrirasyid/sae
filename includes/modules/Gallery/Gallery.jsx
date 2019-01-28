@@ -23,6 +23,10 @@ class SaeGallery extends Component {
   static css(props) {
     // Divi Utils
     const utils = window.ET_Builder.API.Utils;
+    const hasUtil = methodName => {
+      return isFunction(utils[methodName]);
+    };
+    const hasResponsiveUtilsMethod = hasUtil('getResponsiveStatus') && hasUtil('generateResponsiveCss');
 
     const additionalCss = [];
     const hasCustomColumnGutterWidth = '' !== props.column_gutter_width;
@@ -138,7 +142,7 @@ class SaeGallery extends Component {
 
     // GALLERY ITEM - Margin & Padding
     // Check utils existence in case it isn't available
-    if (isFunction(utils.getResponsiveStatus) && isFunction(utils.generateResponsiveCss)) {
+    if (hasResponsiveUtilsMethod) {
       const spacingTypes               = ['margin', 'padding'];
       const spacingCorners             = ['top', 'right', 'bottom', 'left'];
 
