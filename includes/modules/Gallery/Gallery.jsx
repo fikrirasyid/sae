@@ -6,6 +6,7 @@ import {
   includes,
   isEmpty,
   isFunction,
+  merge,
   set,
 } from 'lodash';
 
@@ -29,20 +30,50 @@ class SaeGallery extends Component {
     const hasResponsiveUtilsMethod = hasUtil('getResponsiveStatus') && hasUtil('generateResponsiveCss');
 
     const additionalCss = [];
-    const hasCustomColumnGutterWidth = '' !== props.column_gutter_width;
-    const column = parseFloat(props.column);
+
+    // Selectors
+    const galleryWrapperSelector = '%%order_class%% .sae-gallery-wrapper';
+    const galleryItemSelector    = '%%order_class%% .sae_gallery_item';
 
     // Masonry layout style
     if ('masonry' === props.layout) {
       // Column
-      additionalCss.push([{
-        selector: '%%order_class%% .sae-gallery-wrapper',
+      const columnLastEdit        = get(props, 'column_last_edited', '');
+      const isColumnResponsive    = hasResponsiveUtilsMethod && utils.getResponsiveStatus(columnLastEdit);
+      const column                = parseFloat(get(props, 'column'));
+      const columnResponsiveValue = isColumnResponsive && {
+        desktop: column,
+        tablet:  parseFloat(get(props, 'column_tablet')),
+        phone:   parseFloat(get(props, 'column_phone')),
+      };
+      const columnNumber          = isColumnResponsive ? merge(
+        utils.generateResponsiveCss(
+          columnResponsiveValue,
+          galleryWrapperSelector,
+          '-webkit-column-count'
+        ),
+        utils.generateResponsiveCss(
+          columnResponsiveValue,
+          galleryWrapperSelector,
+          '-moz-column-count'
+        ),
+        utils.generateResponsiveCss(
+          columnResponsiveValue,
+          galleryWrapperSelector,
+          'column-count'
+        ),
+      ) : [{
+        selector: galleryWrapperSelector,
         declaration: `-webkit-column-count: ${column};
           -moz-column-count: ${column};
           column-count: ${column};`,
-      }]);
+      }];
+
+      additionalCss.push(columnNumber);
 
       // Column gutter width
+      const hasCustomColumnGutterWidth = '' !== props.column_gutter_width;
+
       if (hasCustomColumnGutterWidth) {
         additionalCss.push([{
           selector: '%%order_class%% .sae-gallery-wrapper',
@@ -55,7 +86,6 @@ class SaeGallery extends Component {
 
     // GALLERY ITEM
     // GALLERY ITEM - Background
-    const galleryItemSelector = '%%order_class%% .sae_gallery_item';
     const itemBackgroundColor = get(props, 'item_background_color');
     const itemBackgroundGradientUse  = get(props, 'item_background_use_color_gradient', 'off');
     const itemBackgroundImage = get(props, 'item_background_image');
