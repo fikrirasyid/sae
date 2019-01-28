@@ -24,10 +24,50 @@ class SaeGallery extends Component {
   static css(props) {
     // Divi Utils
     const utils = window.ET_Builder.API.Utils;
+
+    // Helpers
     const hasUtil = methodName => {
       return isFunction(utils[methodName]);
     };
-    const hasResponsiveUtilsMethod = hasUtil('getResponsiveStatus') && hasUtil('generateResponsiveCss');
+    const hasResponsiveUtilsMethod   = hasUtil('getResponsiveStatus') && hasUtil('generateResponsiveCss');
+    const getResponsiveAdditionalCSS = (baseAttrName, selector, cssProperty, renderBrowserPrefixVersion = false) => {
+      const lastEdited      = get(props, `${baseAttrName}_last_edited`, '');
+      const isResponsive    = hasResponsiveUtilsMethod && utils.getResponsiveStatus(lastEdited);
+      const desktopValue    = get(props, baseAttrName);
+      const responsiveValue = isResponsive && {
+        desktop: desktopValue,
+        tablet:  get(props, `${baseAttrName}_tablet`),
+        phone:   get(props, `${baseAttrName}_phone`),
+      };
+      const additionalCss   = !isResponsive ? [{
+        selector: galleryWrapperSelector,
+        declaration: `-webkit-${cssProperty}: ${desktopValue};
+          -moz-${cssProperty}: ${desktopValue};
+          ${cssProperty}}: ${desktopValue};`,
+      }] : renderBrowserPrefixVersion ? merge(
+        utils.generateResponsiveCss(
+          responsiveValue,
+          selector,
+          `-webkit-${cssProperty}`
+        ),
+        utils.generateResponsiveCss(
+          responsiveValue,
+          selector,
+          `-moz-${cssProperty}`
+        ),
+        utils.generateResponsiveCss(
+          responsiveValue,
+          selector,
+          cssProperty
+        ),
+      ) : utils.generateResponsiveCss(
+        responsiveValue,
+        selector,
+        cssProperty
+      );
+
+      return additionalCss;
+    };
 
     const additionalCss = [];
 
@@ -35,53 +75,24 @@ class SaeGallery extends Component {
     const galleryWrapperSelector = '%%order_class%% .sae-gallery-wrapper';
     const galleryItemSelector    = '%%order_class%% .sae_gallery_item';
 
+    // GALLERY WRAPPER
     // Masonry layout style
     if ('masonry' === props.layout) {
-      // Column
-      const columnLastEdit        = get(props, 'column_last_edited', '');
-      const isColumnResponsive    = hasResponsiveUtilsMethod && utils.getResponsiveStatus(columnLastEdit);
-      const column                = parseFloat(get(props, 'column'));
-      const columnResponsiveValue = isColumnResponsive && {
-        desktop: column,
-        tablet:  parseFloat(get(props, 'column_tablet')),
-        phone:   parseFloat(get(props, 'column_phone')),
-      };
-      const columnNumber          = isColumnResponsive ? merge(
-        utils.generateResponsiveCss(
-          columnResponsiveValue,
-          galleryWrapperSelector,
-          '-webkit-column-count'
-        ),
-        utils.generateResponsiveCss(
-          columnResponsiveValue,
-          galleryWrapperSelector,
-          '-moz-column-count'
-        ),
-        utils.generateResponsiveCss(
-          columnResponsiveValue,
-          galleryWrapperSelector,
-          'column-count'
-        ),
-      ) : [{
-        selector: galleryWrapperSelector,
-        declaration: `-webkit-column-count: ${column};
-          -moz-column-count: ${column};
-          column-count: ${column};`,
-      }];
+      // GALLERY WRAPPER - Column Count
+      additionalCss.push(getResponsiveAdditionalCSS(
+        'column',
+        galleryWrapperSelector,
+        'column-count',
+        true
+      ));
 
-      additionalCss.push(columnNumber);
-
-      // Column gutter width
-      const hasCustomColumnGutterWidth = '' !== props.column_gutter_width;
-
-      if (hasCustomColumnGutterWidth) {
-        additionalCss.push([{
-          selector: '%%order_class%% .sae-gallery-wrapper',
-          declaration: `-webkit-column-gap: ${props.column_gutter_width};
-            -moz-column-gap: ${props.column_gutter_width};
-            column-gap: ${props.column_gutter_width};`,
-        }]);
-      }
+      // GALLERY WRAPPER - Column Gap
+      additionalCss.push(getResponsiveAdditionalCSS(
+        'column_gutter_width',
+        galleryWrapperSelector,
+        'column-gap',
+        true
+      ));
     }
 
     // GALLERY ITEM
