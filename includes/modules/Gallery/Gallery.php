@@ -2,8 +2,13 @@
 
 class SAE_Gallery extends ET_Builder_Module {
 
-	public $slug       = 'sae_gallery';
-	public $vb_support = 'on';
+	public $slug                 = 'sae_gallery';
+	public $vb_support           = 'on';
+	public $device_media_queries = array(
+		'desktop_only' => 'min_width_981',
+		'tablet'       => 'max_width_980',
+		'phone'        => 'max_width_767',
+	);
 
 	protected $module_credits = array(
 		'module_uri' => '',
@@ -294,31 +299,29 @@ class SAE_Gallery extends ET_Builder_Module {
 		$has_column_gutter_width = '' !== $this->props['column_gutter_width'];
 		$column                  = intval( $this->props['column'] );
 
+		// SELECTORS
+		$gallery_wrapper_selector = '%%order_class%% .sae-gallery-wrapper';
+
+		// GALLERY WRAPPER
 		// Masonry layout style
 		if ( 'masonry' === $this->props['layout'] ) {
-			// Column
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% .sae-gallery-wrapper',
-				'declaration' => sprintf(
-					'-webkit-column-count: %1$s;
-					-moz-column-count: %1$s;
-					column-count: %1$s;',
-					esc_html( $column )
-				),
-			) );
+			// GALLERY WRAPPER - Column
+			$this->set_responsive_style(
+				$render_slug,
+				'column',
+				$gallery_wrapper_selector,
+				'column-count',
+				true
+			);
 
-			// Column Gutter Width
-			if ( $has_column_gutter_width ) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => '%%order_class%% .sae-gallery-wrapper',
-					'declaration' => sprintf(
-						'-webkit-column-gap: %1$s;
-						-moz-column-gap: %1$s;
-						column-gap: %1$s;',
-						esc_html( $this->props['column_gutter_width'] )
-					),
-				) );
-			}
+			// GALLERY WRAPPER - Column Gap / Gutter Width
+			$this->set_responsive_style(
+				$render_slug,
+				'column_gutter_width',
+				$gallery_wrapper_selector,
+				'column-gap',
+				true
+			);
 		}
 
 		// GALLERY ITEM
@@ -467,6 +470,63 @@ class SAE_Gallery extends ET_Builder_Module {
 					$item_spacing['desktop']
 				);
 			}
+		}
+	}
+
+	/**
+	 * Set responsive style based on known responsive attribute structure
+	 *
+	 * @since ??
+	 *
+	 * @param string $render_slug
+	 * @param string $base_attr
+	 * @param string $selector
+	 * @param string $property
+	 * @param bool   $render_browser_vendor_prefix
+	 */
+	public function set_responsive_style( $render_slug, $base_attr, $selector, $property, $render_browser_vendor_prefix = false ) {
+		$last_edited   = self::$_->array_get( $this->props, "{$base_attr}_last_edited", '' );
+		$is_responsive = et_pb_get_responsive_status( $last_edited );
+		$values        = array(
+			'desktop' => self::$_->array_get( $this->props, $base_attr, '' ),
+			'tablet'  => $is_responsive ? self::$_->array_get( $this->props, "{$base_attr}_tablet", '' ) : '',
+			'phone'   => $is_responsive ? self::$_->array_get( $this->props, "{$base_attr}_phone", '' ) : '',
+		);
+
+		// Loop the responsive values
+		foreach ( $values as $device => $value ) {
+			if ( '' === $value ) {
+				continue;
+			}
+
+			// Concatenate style declaration
+			$declaration = '';
+
+			// Browser's vendor prefix based style has to come first
+			if ( $render_browser_vendor_prefix ) {
+				$declaration .= sprintf( '-webkit-%1$s: %2$s;-moz-%1$s: %2$s;',
+					$property,
+					$value
+				);
+			}
+
+			$declaration .= sprintf( '%1$s: %2$s;',
+				$property,
+				$value
+			);
+
+			// Prepare the style
+			$style = array(
+				'selector'    => $selector,
+				'declaration' => $declaration,
+			);
+
+			// If related media query related to current device is found, use it
+			if ( isset( $this->device_media_queries[ $device ] ) ) {
+				$style['media_query'] = ET_Builder_Element::get_media_query( $this->device_media_queries[ $device ] );
+			}
+
+			ET_Builder_Element::set_style( $render_slug, $style );
 		}
 	}
 
