@@ -544,11 +544,6 @@ class SAE_Gallery extends ET_Builder_Module {
 	public function set_spacing_declaration( $type = 'margin', $render_slug, $selector, $attr_value, $breakpoint = false ) {
 		$values        = explode( '|', $attr_value );
 		$corners       = array( 'top', 'right', 'bottom', 'left' );
-		$media_queries = array(
-			'desktop' => 'min_width_981',
-			'tablet'  => 'max_width_980',
-			'phone'  => 'max_width_767',
-		);
 
 		if ( ! empty( $values ) ) {
 			foreach ( $values as $index => $value ) {
@@ -567,8 +562,8 @@ class SAE_Gallery extends ET_Builder_Module {
 					),
 				);
 
-				if ( $breakpoint && isset( $media_queries[ $breakpoint ] ) ) {
-					$media_query = $media_queries[ $breakpoint ];
+				if ( $breakpoint && isset( $this->device_media_queries[ $breakpoint ] ) ) {
+					$media_query = $this->device_media_queries[ $breakpoint ];
 					$styles['media_query'] = ET_Builder_Element::get_media_query( $media_query );
 				}
 
