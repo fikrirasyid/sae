@@ -322,7 +322,7 @@ class SAE_Gallery extends ET_Builder_Module {
 		}
 
 		// GALLERY ITEM
-		// Gallery Item Background
+		// GALLERY ITEM - Background
 		$gallery_item_selector        = '%%order_class%% .sae_gallery_item';
 		$item_background_color        = self::$_->array_get( $this->props, 'item_background_color' );
 		$item_background_gradient_use = self::$_->array_get( $this->props, 'item_background_use_color_gradient', 'off' );
@@ -333,7 +333,10 @@ class SAE_Gallery extends ET_Builder_Module {
 		if ($item_background_color) {
 			ET_Builder_Element::set_style( $render_slug, array(
 				'selector'    => $gallery_item_selector,
-				'declaration' => "background-color: {$item_background_color};",
+				'declaration' => sprintf(
+					'background-color: %1$s;',
+					esc_html( $item_background_color )
+				),
 			) );
 		}
 
@@ -421,6 +424,96 @@ class SAE_Gallery extends ET_Builder_Module {
 					esc_html( join( ', ', $item_background_images ) )
 				),
 			) );
+		}
+
+		// GALLERY ITEM - Margin & Padding
+		$spacing_types = array( 'margin', 'padding' );
+
+		foreach ( $spacing_types as $spacing_type ) {
+			$gallery_item_spacing_selector = 'margin' === $spacing_type ? ".et_pb_gutter .et_pb_column {$gallery_item_selector}" : $gallery_item_selector;
+
+			$item_spacing = array(
+				'desktop' => self::$_->array_get( $this->props, "item_{$spacing_type}", '' ),
+				'tablet'  => self::$_->array_get( $this->props, "item_{$spacing_type}_tablet", '' ),
+				'phone'   => self::$_->array_get( $this->props, "item_{$spacing_type}_phone", '' ),
+			);
+
+			// Check responsive status
+			$is_item_spacing_responsive = et_pb_get_responsive_status( self::$_->array_get(
+				$this->props,
+				"item_{$spacing_type}_last_edited",
+				''
+			) );
+
+			if ( $is_item_spacing_responsive ) {
+				foreach ( $item_spacing as $breakpoint => $item_spacing_breakpoint ) {
+					if ( ! $item_spacing_breakpoint || '||||' === substr( $item_spacing_breakpoint, 0, 4 ) ) {
+						continue;
+					}
+
+					$this->set_spacing_declaration(
+						$spacing_type,
+						$render_slug,
+						$gallery_item_spacing_selector,
+						$item_spacing_breakpoint,
+						$breakpoint
+					);
+				}
+			} else {
+				$this->set_spacing_declaration(
+					$spacing_type,
+					$render_slug,
+					$gallery_item_spacing_selector,
+					$item_spacing['desktop']
+				);
+			}
+		}
+	}
+
+	/**
+	 * Set margin/padding declaration based on attribute values
+	 *
+	 * @since ??
+	 *
+	 * @param string      $type
+	 * @param string      $render_slug
+	 * @param string      $selector
+	 * @param string      $attr_value
+	 * @param string|bool $breakpoint
+	 */
+	public function set_spacing_declaration( $type = 'margin', $render_slug, $selector, $attr_value, $breakpoint = false ) {
+		$values        = explode( '|', $attr_value );
+		$corners       = array( 'top', 'right', 'bottom', 'left' );
+		$media_queries = array(
+			'desktop' => 'min_width_981',
+			'tablet'  => 'max_width_980',
+			'phone'  => 'max_width_767',
+		);
+
+		if ( ! empty( $values ) ) {
+			foreach ( $values as $index => $value ) {
+				// Corners value are defined on first - fourth attributes
+				if ( ! isset( $value ) || '' === $value || $index > 3 ) {
+					continue;
+				}
+
+				$styles = array(
+					'selector'    => $selector,
+					'declaration' => sprintf(
+						'%1$s-%2$s: %3$s;',
+						esc_attr( $type ),
+						esc_attr( $corners[ $index ] ),
+						esc_html( $value )
+					),
+				);
+
+				if ( $breakpoint && isset( $media_queries[ $breakpoint ] ) ) {
+					$media_query = $media_queries[ $breakpoint ];
+					$styles['media_query'] = ET_Builder_Element::get_media_query( $media_query );
+				}
+
+				ET_Builder_Element::set_style( $render_slug, $styles );
+			}
 		}
 	}
 

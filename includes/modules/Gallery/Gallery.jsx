@@ -1,10 +1,12 @@
 // External Dependencies
 import React, { Component } from 'react';
 import {
+  forEach,
   get,
   includes,
   isEmpty,
   isFunction,
+  set,
 } from 'lodash';
 
 class SaeGallery extends Component {
@@ -48,7 +50,7 @@ class SaeGallery extends Component {
     }
 
     // GALLERY ITEM
-    // Gallery Item Background
+    // GALLERY ITEM - Background
     const galleryItemSelector = '%%order_class%% .sae_gallery_item';
     const itemBackgroundColor = get(props, 'item_background_color');
     const itemBackgroundGradientUse  = get(props, 'item_background_use_color_gradient', 'off');
@@ -132,6 +134,55 @@ class SaeGallery extends Component {
         selector: galleryItemSelector,
         declaration: `background-image: ${itemBackgroundImages.join(', ')};`,
       }]);
+    }
+
+    // GALLERY ITEM - Margin & Padding
+    // Check utils existence in case it isn't available
+    if (isFunction(utils.getResponsiveStatus) && isFunction(utils.generateResponsiveCss)) {
+      const spacingTypes               = ['margin', 'padding'];
+      const spacingCorners             = ['top', 'right', 'bottom', 'left'];
+
+      forEach(spacingTypes, spacingType => {
+        const galleryItemSpacingSelector = 'margin' === spacingType ? `.et_pb_gutter .et_pb_column ${galleryItemSelector}` : galleryItemSelector;
+
+        const itemSpacingAttrValues = {
+          desktop: get(props, `item_${spacingType}`, '').split('|'),
+          tablet:  get(props, `item_${spacingType}_tablet`, '').split('|'),
+          phone:   get(props, `item_${spacingType}_phone`, '').split('|'),
+        };
+
+        // Check responsive status
+        const isItemSpacingResponsive = utils.getResponsiveStatus(get(
+          props,
+          `item_${spacingType}_last_edited`,
+          ''
+        ));
+
+        if (!isItemSpacingResponsive) {
+          delete itemSpacingAttrValues.tablet;
+          delete itemSpacingAttrValues.phone;
+        }
+
+        // Populate spacing style configuration
+        const itemSpacing = {};
+
+        forEach(itemSpacingAttrValues, (itemSpacingAttrValue, itemSpacingAttrBreakpoint) => {
+          forEach(spacingCorners, (corner, cornerIndex) => {
+            const spacingCorner = get(itemSpacingAttrValue, cornerIndex);
+
+            spacingCorner && set(itemSpacing, [corner, itemSpacingAttrBreakpoint], spacingCorner);
+          });
+        });
+
+        forEach(itemSpacing, (responsiveValue, corner) => {
+          // Append spacing styling
+          additionalCss.push(utils.generateResponsiveCss(
+            responsiveValue,
+            galleryItemSpacingSelector,
+            `${spacingType}-${corner}`
+          ));
+        });
+      });
     }
 
     return additionalCss;
