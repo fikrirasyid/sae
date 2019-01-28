@@ -1,3 +1,15 @@
+/* Gallery Wrapper */
+.sae-gallery-layout-masonry .sae_gallery_item {
+	 /* Chrome, Safari, Opera */
+	-webkit-column-break-inside: avoid;
+
+	/* Firefox */
+	page-break-inside: avoid;
+
+	/* IE 10+ */
+	break-inside: avoid;
+}
+
 /* Gallery Item */
 .sae_gallery .sae_gallery_item {
 	border-color: #333333;
