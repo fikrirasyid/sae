@@ -5,10 +5,11 @@ import {
   get,
   includes,
   isEmpty,
-  isFunction,
-  merge,
   set,
 } from 'lodash';
+
+// Internal Dependencies
+import saeUtils from '../../saeUtils';
 
 class SaeGallery extends Component {
 
@@ -22,48 +23,24 @@ class SaeGallery extends Component {
    * @return array
    */
   static css(props) {
-    // Divi Utils
-    const utils = window.ET_Builder.API.Utils;
-
     // Helpers
-    const hasUtil = methodName => {
-      return isFunction(utils[methodName]);
-    };
-    const hasResponsiveUtilsMethod   = hasUtil('getResponsiveStatus') && hasUtil('generateResponsiveCss');
     const getResponsiveAdditionalCSS = (baseAttrName, selector, cssProperty, renderBrowserPrefixVersion = false) => {
       const lastEdited      = get(props, `${baseAttrName}_last_edited`, '');
-      const isResponsive    = hasResponsiveUtilsMethod && utils.getResponsiveStatus(lastEdited);
+      const isResponsive    = saeUtils.isFieldResponsive(lastEdited);
       const desktopValue    = get(props, baseAttrName);
-      const responsiveValue = isResponsive && {
-        desktop: desktopValue,
-        tablet:  get(props, `${baseAttrName}_tablet`),
-        phone:   get(props, `${baseAttrName}_phone`),
-      };
       const additionalCss   = !isResponsive ? [{
         selector: galleryWrapperSelector,
         declaration: `-webkit-${cssProperty}: ${desktopValue};
           -moz-${cssProperty}: ${desktopValue};
           ${cssProperty}}: ${desktopValue};`,
-      }] : renderBrowserPrefixVersion ? merge(
-        utils.generateResponsiveCss(
-          responsiveValue,
-          selector,
-          `-webkit-${cssProperty}`
-        ),
-        utils.generateResponsiveCss(
-          responsiveValue,
-          selector,
-          `-moz-${cssProperty}`
-        ),
-        utils.generateResponsiveCss(
-          responsiveValue,
-          selector,
-          cssProperty
-        ),
-      ) : utils.generateResponsiveCss(
-        responsiveValue,
+      }] : saeUtils.generateResponsiveCss(
+        {
+          desktop: {[cssProperty]: desktopValue},
+          tablet:  {[cssProperty]: get(props, `${baseAttrName}_tablet`)},
+          phone:   {[cssProperty]: get(props, `${baseAttrName}_phone`)}
+        },
         selector,
-        cssProperty
+        renderBrowserPrefixVersion
       );
 
       return additionalCss;
@@ -111,8 +88,8 @@ class SaeGallery extends Component {
     }
 
     // Prepare gallery item background gradient styles
-    if ('on' === itemBackgroundGradientUse && isFunction(utils.getGradient)) {
-      itemBackgroundImages.push(utils.getGradient({
+    if ('on' === itemBackgroundGradientUse) {
+      itemBackgroundImages.push(saeUtils.generateGradientDeclaration({
         type: get(props, 'item_background_color_gradient_type'),
         direction: get(props, 'item_background_color_gradient_direction'),
         radialDirection: get(props, 'item_background_color_gradient_direction_radial'),
@@ -182,8 +159,6 @@ class SaeGallery extends Component {
     }
 
     // GALLERY ITEM - Margin & Padding
-    // Check utils existence in case it isn't available
-    if (hasResponsiveUtilsMethod) {
       const spacingTypes               = ['margin', 'padding'];
       const spacingCorners             = ['top', 'right', 'bottom', 'left'];
 
@@ -197,7 +172,7 @@ class SaeGallery extends Component {
         };
 
         // Check responsive status
-        const isItemSpacingResponsive = utils.getResponsiveStatus(get(
+        const isItemSpacingResponsive = saeUtils.isFieldResponsive(get(
           props,
           `item_${spacingType}_last_edited`,
           ''
@@ -215,20 +190,21 @@ class SaeGallery extends Component {
           forEach(spacingCorners, (corner, cornerIndex) => {
             const spacingCorner = get(itemSpacingAttrValue, cornerIndex);
 
-            spacingCorner && set(itemSpacing, [corner, itemSpacingAttrBreakpoint], spacingCorner);
+            // Populate spacing responsive styles
+            spacingCorner && set(
+              itemSpacing,
+              [itemSpacingAttrBreakpoint, `${spacingType}-${corner}`],
+              spacingCorner
+            );
           });
         });
 
-        forEach(itemSpacing, (responsiveValue, corner) => {
-          // Append spacing styling
-          additionalCss.push(utils.generateResponsiveCss(
-            responsiveValue,
-            galleryItemSpacingSelector,
-            `${spacingType}-${corner}`
-          ));
-        });
+        // Append spacing styling
+        additionalCss.push(saeUtils.generateResponsiveCss(
+          itemSpacing,
+          galleryItemSpacingSelector,
+        ));
       });
-    }
 
     return additionalCss;
   }
