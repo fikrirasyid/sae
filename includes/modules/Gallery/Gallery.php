@@ -458,8 +458,9 @@ class SAE_Gallery extends ET_Builder_Module {
 		// Masonry layout style
 		if ( 'masonry' === $this->props['layout'] ) {
 			// GALLERY WRAPPER - Column
-			$this->set_responsive_style(
+			$this->set_field_css(
 				$render_slug,
+				'range',
 				'column',
 				$gallery_wrapper_selector,
 				'column-count',
@@ -467,8 +468,9 @@ class SAE_Gallery extends ET_Builder_Module {
 			);
 
 			// GALLERY WRAPPER - Column Gap / Gutter Width
-			$this->set_responsive_style(
+			$this->set_field_css(
 				$render_slug,
+				'range',
 				'column_gutter_width',
 				$gallery_wrapper_selector,
 				'column-gap',
@@ -556,6 +558,13 @@ class SAE_Gallery extends ET_Builder_Module {
 	public function set_field_css( $render_slug, $field_type, $base_attr_name, $selector, $css_property = '', $add_browser_property = false ) {
 		switch ( $field_type ) {
 			case 'range':
+				$this->set_responsive_style(
+					$render_slug,
+					$base_attr_name,
+					$selector,
+					$css_property,
+					true
+				);
 				break;
 
 			case 'background':
