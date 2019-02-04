@@ -53,23 +53,18 @@ class SAE_GalleryItem extends ET_Builder_Module {
 				'tab_slug'           => 'general',
 				'toggle_slug'        => 'main_content',
 			),
-			'content' => array(
+			'caption' => array(
 				// UI
 				'label'           => esc_html__( 'Caption', 'sae' ),
 				'description'     => esc_html__( '', 'sae' ),
 
 				// Settings
-				'type'            => 'tiny_mce',
+				'type'            => 'text',
 
 				// Category & Location
 				'option_category' => 'basic_option',
 				'tab_slug'        => 'general',
 				'toggle_slug'     => 'main_content',
-
-				// Visibility
-				'show_if_not'     => array(
-					'src' => '',
-				),
 			),
 			'admin_title' => array(
 				// UI
@@ -160,23 +155,25 @@ class SAE_GalleryItem extends ET_Builder_Module {
 		$rendered_image_classnames = implode( ' ', $image_classnames );
 
 		// Caption configuration
-		$content = '' === $this->content ? '' : sprintf(
-			'<div class="sae-gallery-item-caption">%1$s</div>',
-			et_core_sanitized_previously( $this->props['content'] )
+		$caption = '' === $this->props['caption'] ? '' : sprintf(
+			'<figcaption class="sae-gallery-item-caption">%1$s</figcaption>',
+			et_core_sanitized_previously( $this->props['caption'] )
 		);
 
 		return sprintf(
 			'<div class="sae-gallery-item-wrapper">
-				<div class="sae-gallery-item-image-wrapper">
-					<img src="%1$s" alt="%2$s" class="%3$s"%4$s />
-				</div>
-				%5$s
+				<figure>
+					<div class="sae-gallery-item-image-wrapper">
+						<img src="%1$s" alt="%2$s" class="%3$s"%4$s />
+					</div>
+					%5$s
+				</figure>
 			</div>',
 			esc_attr( $src ),
-			esc_attr( $this->props['content'] ),
+			esc_attr( $this->props['caption'] ),
 			esc_attr( $rendered_image_classnames ),
 			et_core_sanitized_previously( $rendered_image_data_attrs ),
-			'' === $this->props['content'] ? '' : et_core_sanitized_previously( $content )
+			et_core_sanitized_previously( $caption )
 		);
 	}
 }

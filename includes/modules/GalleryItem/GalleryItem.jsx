@@ -13,16 +13,18 @@ class SaeGalleryItem extends Component {
    * Module render in VB
    */
   render() {
-    const caption = '' === get(this.props.content(), 'props.content') ? false : <div className="sae-gallery-item-caption">
-      {this.props.content()}
-    </div>;
+    const caption = '' === get(this.props, 'caption', '') ? false : <figcaption className="sae-gallery-item-caption">
+      {this.props.caption}
+    </figcaption>;
 
     return (
       <div className="sae-gallery-item-wrapper">
-        <div className="sae-gallery-item-image-wrapper">
-          <img src={this.props.src} alt={this.props.title} />
-        </div>
-        {caption}
+        <figure>
+          <div className="sae-gallery-item-image-wrapper">
+            <img src={this.props.src} alt={this.props.title} />
+          </div>
+          {caption}
+        </figure>
       </div>
     );
   }

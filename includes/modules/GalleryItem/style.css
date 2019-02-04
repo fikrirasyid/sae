@@ -7,9 +7,12 @@
 	overflow: hidden;
 }
 
-.sae-gallery-item-caption {
-	display: inline-block;
+.sae_gallery .sae_gallery_item figure {
+	margin: 0;
+}
 
+.sae-gallery-item-caption {
+	display: block;
 	font-size: 12px;
 	padding: 10px;
 	line-height: 1.4em;
