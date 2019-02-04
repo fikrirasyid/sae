@@ -44,6 +44,10 @@ class SAE_Gallery extends ET_Builder_Module {
 						'title'    => esc_html__( 'Gallery Items', 'sae' ),
 						'priority' => 30,
 					),
+					'caption' => array(
+						'title'    => esc_html__( 'Caption', 'sae' ),
+						'priority' => 40,
+					),
 				),
 			),
 		);
@@ -99,7 +103,21 @@ class SAE_Gallery extends ET_Builder_Module {
 					'toggle_slug'     => 'items',
 				),
 			),
+			'fonts'        => array(
+				'caption'  => array(
+					'label' => esc_html__( 'Title', 'et_builder' ),
+					'css'   => array(
+						'main' => "%%order_class%% .sae-gallery-item-caption"
+					),
+				),
+			),
 			'link_options' => false,
+			'text'         => array(
+				'use_text_orientation'  => false,
+			),
+			'text_shadow' => array(
+				'default' => false,
+			),
 		);
 	}
 
