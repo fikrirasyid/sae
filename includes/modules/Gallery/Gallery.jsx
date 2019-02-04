@@ -24,6 +24,7 @@ class SaeGallery extends Component {
     // Selectors
     const galleryWrapperSelector = '%%order_class%% .sae-gallery-wrapper';
     const galleryItemSelector    = '%%order_class%% .sae_gallery_item';
+    const galleryCaptionSelector = '%%order_class%% .sae-gallery-item-caption';
 
     // GALLERY WRAPPER
     // Masonry layout style
@@ -76,6 +77,36 @@ class SaeGallery extends Component {
       'padding',
       'item',
       galleryItemSelector,
+      '',
+      false
+    ));
+
+    // CAPTION
+    // CAPTION - Background
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'background',
+      'caption_background',
+      galleryCaptionSelector,
+      '',
+      false
+    ));
+
+    // CAPTION - Margin & Padding
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'margin',
+      'caption',
+      galleryCaptionSelector,
+      '',
+      false
+    ));
+
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'padding',
+      'caption',
+      galleryCaptionSelector,
       '',
       false
     ));

@@ -17,6 +17,11 @@
 	padding: 10px;
 	line-height: 1.4em;
 	color: rgba(150, 150, 150, 0.8);
+
+	/* Builder's border defaults compatibility*/
+	border-width: 0px;
+	border-color: #333333;
+	border-style: solid;
 }
 
 /* Image placeholder style */

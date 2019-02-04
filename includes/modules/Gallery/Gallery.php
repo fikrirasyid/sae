@@ -82,6 +82,34 @@ class SAE_Gallery extends ET_Builder_Module {
 					'tab_slug'        => 'advanced',
 					'toggle_slug'     => 'items',
 				),
+				'caption' => array(
+					// UI
+					'label_prefix'    => esc_html__( 'Caption', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main' => array(
+							'border_radii'        => "%%order_class%% .sae-gallery-item-caption",
+							'border_styles'       => "%%order_class%% .sae-gallery-item-caption",
+							'border_styles_hover' => "%%order_class%% .sae-gallery-item-caption:hover",
+						),
+					),
+
+					// Defaults
+					'defaults'        => array(
+						'border_radii'  => 'on||||',
+						'border_styles' => array(
+							'width' => '0px',
+							'color' => '#333333',
+							'style' => 'solid',
+						),
+					),
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'caption',
+				),
 			),
 			'box_shadow'   => array(
 				'default' => array(),
@@ -101,6 +129,23 @@ class SAE_Gallery extends ET_Builder_Module {
 					'option_category' => 'layout',
 					'tab_slug'        => 'advanced',
 					'toggle_slug'     => 'items',
+				),
+				'caption' => array(
+					// UI
+					'label'           => esc_html__( 'Caption Box Shadow', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main' => '%%order_class%% .sae-gallery-item-caption',
+					),
+
+					// Defaults
+					'defaults'        => 'none',
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'caption',
 				),
 			),
 			'fonts'        => array(
@@ -219,7 +264,7 @@ class SAE_Gallery extends ET_Builder_Module {
 
 			// Gallery Items
 			'item_background_color' => array(
-				//
+				// UI
 				'label'             => esc_html__( 'Item Background', 'sae' ),
 				'description'       => esc_html__( '', 'sae' ),
 
@@ -293,6 +338,84 @@ class SAE_Gallery extends ET_Builder_Module {
 					),
 				),
 			),
+
+			// Caption
+			'caption_background_color' => array(
+				// UI
+				'label'             => esc_html__( 'Caption Background', 'sae' ),
+				'description'       => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'              => 'background-field',
+				'base_name'         => 'caption_background',
+				'context'           => 'caption_background',
+				'custom_color'      => true,
+				'background_fields' => $this->generate_background_options(
+					'caption_background',
+					// Intentionally use color, gradient, and image ala button background
+					// only to keep things simple
+					'button',
+					'advanced',
+					'layout',
+					'caption_background'
+				),
+
+				// Category & Location
+				'option_category'   => 'layout',
+				'tab_slug'          => 'advanced',
+				'toggle_slug'       => 'caption',
+			),
+			'caption_padding'    => array(
+				// UI
+				'label'           => esc_html__( 'Caption Padding', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+				'default'         => '10px|10px|10px|10px',
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+
+				// Visibility
+				'show_if'         => array(
+					'layout'      => array(
+						'plain',
+						'masonry',
+					),
+				),
+			),
+			'caption_margin'     => array(
+				// UI
+				'label'           => esc_html__( 'Caption Margin', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+
+				// Visibility
+				'show_if'         => array(
+					'layout'      => array(
+						'plain',
+						'masonry',
+					),
+				),
+			),
 		);
 
 		// background-field's fields need to be manually added as `skip` type of field so its value
@@ -307,6 +430,15 @@ class SAE_Gallery extends ET_Builder_Module {
 				'advanced',
 				'layout',
 				'item_background'
+			),
+			$this->generate_background_options(
+				'caption_background',
+				// Intentionally use color, gradient, and image ala button background
+				// only to keep things simple
+				'skip',
+				'advanced',
+				'layout',
+				'caption_background'
 			)
 		);
 
