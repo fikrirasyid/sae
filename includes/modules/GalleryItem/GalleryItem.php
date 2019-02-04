@@ -4,7 +4,7 @@ class SAE_GalleryItem extends ET_Builder_Module {
 
 	public $slug                     = 'sae_gallery_item';
 	public $type                     = 'child';
-	public $child_title_var          = 'admin_label';
+	public $child_title_var          = 'caption';
 	public $child_title_fallback_var = 'admin_label';
 	public $vb_support               = 'on';
 
