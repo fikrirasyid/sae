@@ -62,7 +62,7 @@ class SaeGallery extends Component {
       false
     ));
 
-    // GALLERY ITEM - Margin & Padding
+    // GALLERY ITEM - Margin
     additionalCss = additionalCss.concat(saeUtils.generateCss(
       props,
       'margin',
@@ -72,6 +72,7 @@ class SaeGallery extends Component {
       false
     ));
 
+    // GALLERY ITEM - Padding
     additionalCss = additionalCss.concat(saeUtils.generateCss(
       props,
       'padding',
@@ -92,7 +93,7 @@ class SaeGallery extends Component {
       false
     ));
 
-    // CAPTION - Margin & Padding
+    // CAPTION - Margin
     additionalCss = additionalCss.concat(saeUtils.generateCss(
       props,
       'margin',
@@ -102,6 +103,7 @@ class SaeGallery extends Component {
       false
     ));
 
+    // CAPTION - Padding
     additionalCss = additionalCss.concat(saeUtils.generateCss(
       props,
       'padding',

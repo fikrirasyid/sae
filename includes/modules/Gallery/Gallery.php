@@ -451,6 +451,8 @@ class SAE_Gallery extends ET_Builder_Module {
 
 		// SELECTORS
 		$gallery_wrapper_selector = '%%order_class%% .sae-gallery-wrapper';
+		$gallery_item_selector    = '%%order_class%% .sae_gallery_item';
+		$gallery_caption_selector = '%%order_class%% .sae-gallery-item-caption';
 
 		// GALLERY WRAPPER
 		// Masonry layout style
@@ -476,150 +478,233 @@ class SAE_Gallery extends ET_Builder_Module {
 
 		// GALLERY ITEM
 		// GALLERY ITEM - Background
-		$gallery_item_selector        = '%%order_class%% .sae_gallery_item';
-		$item_background_color        = self::$_->array_get( $this->props, 'item_background_color' );
-		$item_background_gradient_use = self::$_->array_get( $this->props, 'item_background_use_color_gradient', 'off' );
-		$item_background_image        = self::$_->array_get( $this->props, 'item_background_image' );
-		$item_background_images       = array();
+		$this->set_field_css(
+			$render_slug,
+			'background',
+			'item_background',
+			$gallery_item_selector,
+			'',
+			false
+		);
 
-		// Gallery Item background color
-		if ($item_background_color) {
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => $gallery_item_selector,
-				'declaration' => sprintf(
-					'background-color: %1$s;',
-					esc_html( $item_background_color )
-				),
-			) );
-		}
+		// GALLERY ITEM - Margin
+		$this->set_field_css(
+			$render_slug,
+			'margin',
+			'item',
+			$gallery_item_selector,
+			'',
+			false
+		);
 
-		// Prepare gallery item background gradient styles
-		if ( 'on' === $item_background_gradient_use ) {
-			$item_background_images[] = $this->get_gradient( array(
-				'type'             => self::$_->array_get( $this->props, 'item_background_color_gradient_type' ),
-				'direction'        => self::$_->array_get( $this->props, 'item_background_color_gradient_direction' ),
-				'radial_direction' => self::$_->array_get( $this->props, 'item_background_color_gradient_direction_radial' ),
-				'color_start'      => self::$_->array_get( $this->props, 'item_background_color_gradient_start' ),
-				'color_end'        => self::$_->array_get( $this->props, 'item_background_color_gradient_end' ),
-				'start_position'   => self::$_->array_get( $this->props, 'item_background_color_gradient_start_position' ),
-				'end_position'     => self::$_->array_get( $this->props, 'item_background_color_gradient_end_position' ),
-			) );
-		}
+		// GALLERY ITEM - Padding
+		$this->set_field_css(
+			$render_slug,
+			'padding',
+			'item',
+			$gallery_item_selector,
+			'',
+			false
+		);
 
-		// Prepare & add gallery item background image styles
-		if ( $item_background_image ) {
-			$item_background_images[] = "url({$item_background_image})";
+		// CAPTION
+		// CAPTION - Background
+		$this->set_field_css(
+			$render_slug,
+			'background',
+			'caption_background',
+			$gallery_caption_selector,
+			'',
+			false
+		);
 
-			$item_background_size     = self::$_->array_get( $this->props, 'item_background_size' );
-			$item_background_position = self::$_->array_get( $this->props, 'item_background_position', '' );
-			$item_background_repeat   = self::$_->array_get( $this->props, 'item_background_repeat' );
-			$item_background_blend    = self::$_->array_get( $this->props, 'item_background_blend' );
+		// CAPTION - Margin
+		$this->set_field_css(
+			$render_slug,
+			'margin',
+			'caption',
+			$gallery_caption_selector,
+			'',
+			false
+		);
 
-			if ($item_background_size) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => $gallery_item_selector,
-					'declaration' => sprintf(
-						'background-size: %1$s; ',
-						esc_html( $item_background_size )
-					),
-				) );
-			}
+		// CAPTION - Padding
+		$this->set_field_css(
+			$render_slug,
+			'padding',
+			'caption',
+			$gallery_caption_selector,
+			'',
+			false
+		);
+	}
 
-			if ($item_background_position) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => $gallery_item_selector,
-					'declaration' => sprintf(
-						'background-position: %1$s; ',
-						esc_html( str_replace( '_', ' ', $item_background_position ) )
-					),
-				) );
-			}
+	/**
+	 * Automatically process fields data into CSS settings
+	 *
+	 * @since ??
+	 *
+	 * @param string $render_slug
+	 * @param string $field_type
+	 * @param string $base_attr_name
+	 * @param string $selector
+	 * @param string $css_property
+	 * @param string $add_browser_property
+	 *
+	 * @return void
+	 */
+	public function set_field_css( $render_slug, $field_type, $base_attr_name, $selector, $css_property = '', $add_browser_property = false ) {
+		switch ( $field_type ) {
+			case 'range':
+				break;
 
-			if ($item_background_repeat) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => $gallery_item_selector,
-					'declaration' => sprintf(
-						'background-repeat: %1$s; ',
-						esc_html( $item_background_repeat )
-					),
-				) );
-			}
+			case 'background':
+				$background_color        = self::$_->array_get( $this->props, "{$base_attr_name}_color" );
+				$background_gradient_use = self::$_->array_get( $this->props, "{$base_attr_name}_use_color_gradient", 'off' );
+				$background_image        = self::$_->array_get( $this->props, "{$base_attr_name}_image" );
+				$background_images       = array();
 
-			if ($item_background_blend) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => $gallery_item_selector,
-					'declaration' => sprintf(
-						'background-blend-mode: %1$s; ',
-						esc_html( $item_background_blend )
-					),
-				) );
-			}
+				// Background color
+				if ($background_color) {
+					ET_Builder_Element::set_style( $render_slug, array(
+						'selector'    => $selector,
+						'declaration' => sprintf(
+							'background-color: %1$s;',
+							esc_html( $background_color )
+						),
+					) );
+				}
 
-			// Background image and gradient exist
-			if ( count( $item_background_images ) > 1 && $item_background_blend && 'normal' !== $item_background_blend ) {
-				ET_Builder_Element::set_style( $render_slug, array(
-					'selector'    => $gallery_item_selector,
-					'declaration' => 'background-color: initial; ',
-				) );
-			}
-		}
+				// Prepare gallery item background gradient styles
+				if ( 'on' === $background_gradient_use ) {
+					$background_images[] = $this->get_gradient( array(
+						'type'             => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_type" ),
+						'direction'        => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_direction" ),
+						'radial_direction' => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_direction_radial" ),
+						'color_start'      => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_start" ),
+						'color_end'        => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_end" ),
+						'start_position'   => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_start_position" ),
+						'end_position'     => self::$_->array_get( $this->props, "{$base_attr_name}_color_gradient_end_position" ),
+					) );
+				}
 
-		// Add gallery item background gradient and image styles (both uses background-image property)
-		if ( ! empty( $item_background_images ) ) {
-			if ('on' !== self::$_->array_get( $this->props, 'item_background_color_gradient_overlays_image' ) ) {
-				array_reverse( $item_background_images );
-			}
+				// Prepare & add gallery item background image styles
+				if ( $background_image ) {
+					$background_images[] = "url({$background_image})";
 
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => $gallery_item_selector,
-				'declaration' => sprintf(
-					'background-image: %1$s; ',
-					esc_html( join( ', ', $item_background_images ) )
-				),
-			) );
-		}
+					$background_size     = self::$_->array_get( $this->props, "{$base_attr_name}_size" );
+					$background_position = self::$_->array_get( $this->props, "{$base_attr_name}_position", '' );
+					$background_repeat   = self::$_->array_get( $this->props, "{$base_attr_name}_repeat" );
+					$background_blend    = self::$_->array_get( $this->props, "{$base_attr_name}_blend" );
 
-		// GALLERY ITEM - Margin & Padding
-		$spacing_types = array( 'margin', 'padding' );
-
-		foreach ( $spacing_types as $spacing_type ) {
-			$gallery_item_spacing_selector = 'margin' === $spacing_type ? ".et_pb_gutter .et_pb_column {$gallery_item_selector}" : $gallery_item_selector;
-
-			$item_spacing = array(
-				'desktop' => self::$_->array_get( $this->props, "item_{$spacing_type}", '' ),
-				'tablet'  => self::$_->array_get( $this->props, "item_{$spacing_type}_tablet", '' ),
-				'phone'   => self::$_->array_get( $this->props, "item_{$spacing_type}_phone", '' ),
-			);
-
-			// Check responsive status
-			$is_item_spacing_responsive = et_pb_get_responsive_status( self::$_->array_get(
-				$this->props,
-				"item_{$spacing_type}_last_edited",
-				''
-			) );
-
-			if ( $is_item_spacing_responsive ) {
-				foreach ( $item_spacing as $breakpoint => $item_spacing_breakpoint ) {
-					if ( ! $item_spacing_breakpoint || '||||' === substr( $item_spacing_breakpoint, 0, 4 ) ) {
-						continue;
+					if ($background_size) {
+						ET_Builder_Element::set_style( $render_slug, array(
+							'selector'    => $selector,
+							'declaration' => sprintf(
+								'background-size: %1$s; ',
+								esc_html( $background_size )
+							),
+						) );
 					}
 
+					if ($background_position) {
+						ET_Builder_Element::set_style( $render_slug, array(
+							'selector'    => $selector,
+							'declaration' => sprintf(
+								'background-position: %1$s; ',
+								esc_html( str_replace( '_', ' ', $background_position ) )
+							),
+						) );
+					}
+
+					if ($background_repeat) {
+						ET_Builder_Element::set_style( $render_slug, array(
+							'selector'    => $selector,
+							'declaration' => sprintf(
+								'background-repeat: %1$s; ',
+								esc_html( $background_repeat )
+							),
+						) );
+					}
+
+					if ($background_blend) {
+						ET_Builder_Element::set_style( $render_slug, array(
+							'selector'    => $selector,
+							'declaration' => sprintf(
+								'background-blend-mode: %1$s; ',
+								esc_html( $background_blend )
+							),
+						) );
+					}
+
+					// Background image and gradient exist
+					if ( count( $background_images ) > 1 && $background_blend && 'normal' !== $background_blend ) {
+						ET_Builder_Element::set_style( $render_slug, array(
+							'selector'    => $selector,
+							'declaration' => 'background-color: initial; ',
+						) );
+					}
+				}
+
+				// Add gallery item background gradient and image styles (both uses background-image property)
+				if ( ! empty( $background_images ) ) {
+					if ('on' !== self::$_->array_get( $this->props, "${base_attr_name}_color_gradient_overlays_image" ) ) {
+						array_reverse( $background_images );
+					}
+
+					ET_Builder_Element::set_style( $render_slug, array(
+						'selector'    => $selector,
+						'declaration' => sprintf(
+							'background-image: %1$s; ',
+							esc_html( join( ', ', $background_images ) )
+						),
+					) );
+				}
+				break;
+
+			case 'margin':
+			case 'padding':
+				$spacing_selector = 'margin' === $field_type ? ".et_pb_gutter .et_pb_column {$selector}" : $selector;
+
+				$spacing = array(
+					'desktop' => self::$_->array_get( $this->props, "{$base_attr_name}_{$field_type}", '' ),
+					'tablet'  => self::$_->array_get( $this->props, "{$base_attr_name}_{$field_type}_tablet", '' ),
+					'phone'   => self::$_->array_get( $this->props, "{$base_attr_name}_{$field_type}_phone", '' ),
+				);
+
+				// Check responsive status
+				$is_spacing_responsive = et_pb_get_responsive_status( self::$_->array_get(
+					$this->props,
+					"{$base_attr_name}_{$field_type}_last_edited",
+					''
+				) );
+
+				if ( $is_spacing_responsive ) {
+					foreach ( $spacing as $breakpoint => $spacing_breakpoint ) {
+						if ( ! $spacing_breakpoint || '||||' === substr( $spacing_breakpoint, 0, 4 ) ) {
+							continue;
+						}
+
+						$this->set_spacing_declaration(
+							$field_type,
+							$render_slug,
+							$spacing_selector,
+							$spacing_breakpoint,
+							$breakpoint
+						);
+					}
+				} else {
 					$this->set_spacing_declaration(
-						$spacing_type,
+						$field_type,
 						$render_slug,
-						$gallery_item_spacing_selector,
-						$item_spacing_breakpoint,
-						$breakpoint
+						$spacing_selector,
+						$spacing['desktop']
 					);
 				}
-			} else {
-				$this->set_spacing_declaration(
-					$spacing_type,
-					$render_slug,
-					$gallery_item_spacing_selector,
-					$item_spacing['desktop']
-				);
-			}
+				break;
+
+			default:
+				break;
 		}
 	}
 
