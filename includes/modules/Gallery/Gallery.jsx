@@ -1,11 +1,7 @@
 // External Dependencies
 import React, { Component } from 'react';
 import {
-  forEach,
-  get,
   includes,
-  isEmpty,
-  set,
 } from 'lodash';
 
 // Internal Dependencies
@@ -23,30 +19,7 @@ class SaeGallery extends Component {
    * @return array
    */
   static css(props) {
-    // Helpers
-    const getResponsiveAdditionalCSS = (baseAttrName, selector, cssProperty, renderBrowserPrefixVersion = false) => {
-      const lastEdited      = get(props, `${baseAttrName}_last_edited`, '');
-      const isResponsive    = saeUtils.isFieldResponsive(lastEdited);
-      const desktopValue    = get(props, baseAttrName);
-      const additionalCss   = !isResponsive ? [{
-        selector: galleryWrapperSelector,
-        declaration: `-webkit-${cssProperty}: ${desktopValue};
-          -moz-${cssProperty}: ${desktopValue};
-          ${cssProperty}}: ${desktopValue};`,
-      }] : saeUtils.generateResponsiveCss(
-        {
-          desktop: {[cssProperty]: desktopValue},
-          tablet:  {[cssProperty]: get(props, `${baseAttrName}_tablet`)},
-          phone:   {[cssProperty]: get(props, `${baseAttrName}_phone`)}
-        },
-        selector,
-        renderBrowserPrefixVersion
-      );
-
-      return additionalCss;
-    };
-
-    const additionalCss = [];
+    let additionalCss = [];
 
     // Selectors
     const galleryWrapperSelector = '%%order_class%% .sae-gallery-wrapper';
@@ -56,7 +29,9 @@ class SaeGallery extends Component {
     // Masonry layout style
     if ('masonry' === props.layout) {
       // GALLERY WRAPPER - Column Count
-      additionalCss.push(getResponsiveAdditionalCSS(
+      additionalCss = additionalCss.concat(saeUtils.generateCss(
+        props,
+        'range',
         'column',
         galleryWrapperSelector,
         'column-count',
@@ -64,7 +39,9 @@ class SaeGallery extends Component {
       ));
 
       // GALLERY WRAPPER - Column Gap
-      additionalCss.push(getResponsiveAdditionalCSS(
+      additionalCss = additionalCss.concat(saeUtils.generateCss(
+        props,
+        'range',
         'column_gutter_width',
         galleryWrapperSelector,
         'column-gap',
@@ -72,139 +49,36 @@ class SaeGallery extends Component {
       ));
     }
 
+
     // GALLERY ITEM
     // GALLERY ITEM - Background
-    const itemBackgroundColor = get(props, 'item_background_color');
-    const itemBackgroundGradientUse  = get(props, 'item_background_use_color_gradient', 'off');
-    const itemBackgroundImage = get(props, 'item_background_image');
-    const itemBackgroundImages = [];
-
-    // Gallery Item background color
-    if (itemBackgroundColor) {
-      additionalCss.push([{
-        selector: galleryItemSelector,
-        declaration: `background-color: ${itemBackgroundColor};`,
-      }]);
-    }
-
-    // Prepare gallery item background gradient styles
-    if ('on' === itemBackgroundGradientUse) {
-      itemBackgroundImages.push(saeUtils.generateGradientDeclaration({
-        type: get(props, 'item_background_color_gradient_type'),
-        direction: get(props, 'item_background_color_gradient_direction'),
-        radialDirection: get(props, 'item_background_color_gradient_direction_radial'),
-        colorStart: get(props, 'item_background_color_gradient_start'),
-        colorEnd: get(props, 'item_background_color_gradient_end'),
-        startPosition: get(props, 'item_background_color_gradient_start_position'),
-        endPosition: get(props, 'item_background_color_gradient_end_position'),
-      }));
-    }
-
-    // Prepare & add gallery item background image styles
-    if (itemBackgroundImage) {
-      itemBackgroundImages.push(`url(${itemBackgroundImage})`);
-
-      const itemBackgroundSize = get(props, 'item_background_size');
-      const itemBackgroundPosition = get(props, 'item_background_position', '');
-      const itemBackgroundRepeat = get(props, 'item_background_repeat');
-      const itemBackgroundBlend = get(props, 'item_background_blend');
-
-      if (itemBackgroundSize) {
-        additionalCss.push([{
-          selector: galleryItemSelector,
-          declaration: `background-size: ${itemBackgroundSize}`,
-        }]);
-      }
-
-      if (itemBackgroundPosition) {
-        additionalCss.push([{
-          selector: galleryItemSelector,
-          declaration: `background-position: ${itemBackgroundPosition.replace('_', ' ')}`,
-        }]);
-      }
-
-      if (itemBackgroundRepeat) {
-        additionalCss.push([{
-          selector: galleryItemSelector,
-          declaration: `background-repeat: ${itemBackgroundRepeat}`,
-        }]);
-      }
-
-      if (itemBackgroundBlend) {
-        additionalCss.push([{
-          selector: galleryItemSelector,
-          declaration: `background-blend-mode: ${itemBackgroundBlend}`,
-        }]);
-      }
-
-      // Background image and gradient exist
-      if (itemBackgroundImages.length > 1 && itemBackgroundBlend && 'normal' !== itemBackgroundBlend) {
-        additionalCss.push([{
-          selector: galleryItemSelector,
-          declaration: `background-color: initial;`,
-        }]);
-      }
-    }
-
-    // Add gallery item background gradient and image styles (both uses background-image property)
-    if (!isEmpty(itemBackgroundImages)) {
-      if ('on' !== get(props, 'item_background_color_gradient_overlays_image')) {
-        itemBackgroundImages.reverse();
-      }
-
-      additionalCss.push([{
-        selector: galleryItemSelector,
-        declaration: `background-image: ${itemBackgroundImages.join(', ')};`,
-      }]);
-    }
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'background',
+      'item_background',
+      galleryItemSelector,
+      '',
+      false
+    ));
 
     // GALLERY ITEM - Margin & Padding
-      const spacingTypes               = ['margin', 'padding'];
-      const spacingCorners             = ['top', 'right', 'bottom', 'left'];
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'margin',
+      'item',
+      galleryItemSelector,
+      '',
+      false
+    ));
 
-      forEach(spacingTypes, spacingType => {
-        const galleryItemSpacingSelector = 'margin' === spacingType ? `.et_pb_gutter .et_pb_column ${galleryItemSelector}` : galleryItemSelector;
-
-        const itemSpacingAttrValues = {
-          desktop: get(props, `item_${spacingType}`, '').split('|'),
-          tablet:  get(props, `item_${spacingType}_tablet`, '').split('|'),
-          phone:   get(props, `item_${spacingType}_phone`, '').split('|'),
-        };
-
-        // Check responsive status
-        const isItemSpacingResponsive = saeUtils.isFieldResponsive(get(
-          props,
-          `item_${spacingType}_last_edited`,
-          ''
-        ));
-
-        if (!isItemSpacingResponsive) {
-          delete itemSpacingAttrValues.tablet;
-          delete itemSpacingAttrValues.phone;
-        }
-
-        // Populate spacing style configuration
-        const itemSpacing = {};
-
-        forEach(itemSpacingAttrValues, (itemSpacingAttrValue, itemSpacingAttrBreakpoint) => {
-          forEach(spacingCorners, (corner, cornerIndex) => {
-            const spacingCorner = get(itemSpacingAttrValue, cornerIndex);
-
-            // Populate spacing responsive styles
-            spacingCorner && set(
-              itemSpacing,
-              [itemSpacingAttrBreakpoint, `${spacingType}-${corner}`],
-              spacingCorner
-            );
-          });
-        });
-
-        // Append spacing styling
-        additionalCss.push(saeUtils.generateResponsiveCss(
-          itemSpacing,
-          galleryItemSpacingSelector,
-        ));
-      });
+    additionalCss = additionalCss.concat(saeUtils.generateCss(
+      props,
+      'padding',
+      'item',
+      galleryItemSelector,
+      '',
+      false
+    ));
 
     return additionalCss;
   }

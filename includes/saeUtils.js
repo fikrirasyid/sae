@@ -7,10 +7,196 @@ import {
   isObject,
   isString,
   pickBy,
+  set,
 } from 'lodash';
 
 // Utilities
 const saeUtils = {
+  /**
+   * Automatically process fields data into CSS settings
+   *
+   * @since ??
+   *
+   * @param {object}  props              module props
+   * @param {string}  fieldType          field type
+   * @param {string}  baseAttrName       base attribute name used by the field
+   * @param {string}  selector           css selector
+   * @param {string}  cssProperty        css property used by the field (fieldType = range)
+   * @param {boolean} addBrowserProperty add browser specific vendor css property
+   *
+   * @return {array} array of css settings
+   */
+  generateCss(props, fieldType, baseAttrName, selector, cssProperty, addBrowserProperty = false) {
+    let additionalCss = [];
+
+    switch(fieldType) {
+      case 'range':
+        const lastEdited   = get(props, `${baseAttrName}_last_edited`, '');
+        const isResponsive = this.isFieldResponsive(lastEdited);
+        const desktopValue = get(props, baseAttrName);
+
+        const fieldCss     = !isResponsive ? [{
+          selector: selector,
+          declaration: !addBrowserProperty ?
+            `${cssProperty}}: ${desktopValue};`
+            :
+            `-webkit-${cssProperty}: ${desktopValue};
+            -moz-${cssProperty}: ${desktopValue};
+            ${cssProperty}}: ${desktopValue};`,
+          }] : this.generateResponsiveCss(
+          {
+            desktop: {[cssProperty]: desktopValue},
+            tablet:  {[cssProperty]: get(props, `${baseAttrName}_tablet`)},
+            phone:   {[cssProperty]: get(props, `${baseAttrName}_phone`)}
+          },
+          selector,
+          addBrowserProperty
+        );
+
+        additionalCss.push(fieldCss);
+        break;
+      case 'background':
+        const backgroundColor = get(props, `${baseAttrName}_color`);
+        const backgroundGradientUse  = get(props, `${baseAttrName}_use_color_gradient`, 'off');
+        const backgroundImage = get(props, `${baseAttrName}_image`);
+        const backgroundImages = [];
+
+        // Gallery Item background color
+        if (backgroundColor) {
+          additionalCss.push([{
+            selector: selector,
+            declaration: `background-color: ${backgroundColor};`,
+          }]);
+        }
+
+        // Prepare gallery item background gradient styles
+        if ('on' === backgroundGradientUse) {
+          backgroundImages.push(saeUtils.generateGradientDeclaration({
+            type: get(props, `${baseAttrName}_color_gradient_type`),
+            direction: get(props, `${baseAttrName}_color_gradient_direction`),
+            radialDirection: get(props, `${baseAttrName}_color_gradient_direction_radial`),
+            colorStart: get(props, `${baseAttrName}_color_gradient_start`),
+            colorEnd: get(props, `${baseAttrName}_color_gradient_end`),
+            startPosition: get(props, `${baseAttrName}_color_gradient_start_position`),
+            endPosition: get(props, `${baseAttrName}_color_gradient_end_position`),
+          }));
+        }
+
+        // Prepare & add gallery item background image styles
+        if (backgroundImage) {
+          backgroundImages.push(`url(${backgroundImage})`);
+
+          const backgroundSize = get(props, `${baseAttrName}_size`);
+          const backgroundPosition = get(props, `${baseAttrName}_position`, '');
+          const backgroundRepeat = get(props, `${baseAttrName}_repeat`);
+          const backgroundBlend = get(props, `${baseAttrName}_blend`);
+
+          if (backgroundSize) {
+            additionalCss.push([{
+              selector: selector,
+              declaration: `background-size: ${backgroundSize}`,
+            }]);
+          }
+
+          if (backgroundPosition) {
+            additionalCss.push([{
+              selector: selector,
+              declaration: `background-position: ${backgroundPosition.replace('_', ' ')}`,
+            }]);
+          }
+
+          if (backgroundRepeat) {
+            additionalCss.push([{
+              selector: selector,
+              declaration: `background-repeat: ${backgroundRepeat}`,
+            }]);
+          }
+
+          if (backgroundBlend) {
+            additionalCss.push([{
+              selector: selector,
+              declaration: `background-blend-mode: ${backgroundBlend}`,
+            }]);
+          }
+
+          // Background image and gradient exist
+          if (backgroundImages.length > 1 && backgroundBlend && 'normal' !== backgroundBlend) {
+            additionalCss.push([{
+              selector: selector,
+              declaration: `background-color: initial;`,
+            }]);
+          }
+        }
+
+        // Add gallery item background gradient and image styles (both uses background-image property)
+        if (!isEmpty(backgroundImages)) {
+          if ('on' !== get(props, `${baseAttrName}_color_gradient_overlays_image`)) {
+            backgroundImages.reverse();
+          }
+
+          additionalCss.push([{
+            selector: selector,
+            declaration: `background-image: ${backgroundImages.join(', ')};`,
+          }]);
+        }
+        break;
+      case 'margin':
+      case 'padding':
+
+        const spacingCorners  = ['top', 'right', 'bottom', 'left'];
+        const spacingSelector = 'margin' === fieldType ?
+          `.et_pb_gutter .et_pb_column ${selector}` :
+          selector;
+
+        const spacingAttrValues = {
+          desktop: get(props, `${baseAttrName}_${fieldType}`, '').split('|'),
+          tablet:  get(props, `${baseAttrName}_${fieldType}_tablet`, '').split('|'),
+          phone:   get(props, `${baseAttrName}_${fieldType}_phone`, '').split('|'),
+        };
+
+        // Check responsive status
+        const isSpacingResponsive = saeUtils.isFieldResponsive(get(
+          props,
+          `${baseAttrName}_${fieldType}_last_edited`,
+          ''
+        ));
+
+        if (!isSpacingResponsive) {
+          delete spacingAttrValues.tablet;
+          delete spacingAttrValues.phone;
+        }
+
+        // Populate spacing style configuration
+        const spacing = {};
+
+        forEach(spacingAttrValues, (spacingAttrValue, spacingAttrBreakpoint) => {
+          forEach(spacingCorners, (corner, cornerIndex) => {
+            const spacingCorner = get(spacingAttrValue, cornerIndex);
+
+            // Populate spacing responsive styles
+            spacingCorner && set(
+              spacing,
+              [spacingAttrBreakpoint, `${fieldType}-${corner}`],
+              spacingCorner
+            );
+          });
+        });
+
+        // Append spacing styling
+        additionalCss.push(saeUtils.generateResponsiveCss(
+          spacing,
+          spacingSelector,
+        ));
+
+        break;
+      default:
+        break;
+
+    }
+
+    return additionalCss;
+  },
+
   /**
    * Generate responsive CSS declaration
    *
@@ -123,12 +309,14 @@ const saeUtils = {
 };
 
 const {
+  generateCss,
   generateResponsiveCss,
   generateGradientDeclaration,
   isFieldResponsive,
 } = saeUtils;
 
 export {
+  generateCss,
   generateResponsiveCss,
   generateGradientDeclaration,
   isFieldResponsive,
