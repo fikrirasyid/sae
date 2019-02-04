@@ -38,11 +38,11 @@ const saeUtils = {
         const fieldCss     = !isResponsive ? [{
           selector: selector,
           declaration: !addBrowserProperty ?
-            `${cssProperty}}: ${desktopValue};`
+            `${cssProperty}: ${desktopValue};`
             :
             `-webkit-${cssProperty}: ${desktopValue};
             -moz-${cssProperty}: ${desktopValue};
-            ${cssProperty}}: ${desktopValue};`,
+            ${cssProperty}: ${desktopValue};`,
           }] : this.generateResponsiveCss(
           {
             desktop: {[cssProperty]: desktopValue},
