@@ -1,12 +1,12 @@
 <?php
 
-class SAE_GalleryItem extends ET_Builder_Module {
-
+class SAE_GalleryItem extends SAE_Builder_Module {
 	public $slug                     = 'sae_gallery_item';
 	public $type                     = 'child';
 	public $child_title_var          = 'caption';
 	public $child_title_fallback_var = 'admin_label';
 	public $vb_support               = 'on';
+	public $main_css_element         = '.sae_gallery .sae_gallery_item%%order_class%%';
 
 	protected $module_credits = array(
 		'module_uri' => '',
@@ -31,11 +31,87 @@ class SAE_GalleryItem extends ET_Builder_Module {
 					),
 				),
 			),
+			'advanced' => array(
+				'toggles' => array(
+					'caption' => array(
+						'title'    => esc_html__( 'Caption', 'sae' ),
+						'priority' => 40,
+					),
+				),
+			),
+		);
+		$this->advanced_fields         = array(
+			'borders'     => array(
+				'default' => array(),
+				'caption' => array(
+					// UI
+					'label_prefix'    => esc_html__( 'Caption', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main' => array(
+							'border_radii'        => "{$this->main_css_element} .sae-gallery-item-caption",
+							'border_styles'       => "{$this->main_css_element} .sae-gallery-item-caption",
+							'border_styles_hover' => "{$this->main_css_element} .sae-gallery-item-caption:hover",
+						),
+					),
+
+					// Defaults
+					'defaults'        => array(
+						'border_radii'  => 'on||||',
+						'border_styles' => array(
+							'width' => '0px',
+							'color' => '#333333',
+							'style' => 'solid',
+						),
+					),
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'caption',
+				),
+			),
+			'box_shadow'  => array(
+				'default' => array(),
+				'caption' => array(
+					// UI
+					'label'           => esc_html__( 'Caption Box Shadow', 'sae' ),
+
+					// CSS
+					'css'             => array(
+						'main' => "{$this->main_css_element} .sae-gallery-item-caption",
+					),
+
+					// Defaults
+					'defaults'        => 'none',
+
+					// Category & Location
+					'option_category' => 'layout',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'caption',
+				),
+			),
+			'fonts'       => array(
+				'caption' => array(
+					'label' => esc_html__( 'Title', 'et_builder' ),
+					'css'   => array(
+						'main' => "{$this->main_css_element} .sae-gallery-item-caption"
+					),
+				),
+			),
+			'text'         => array(
+				'use_text_orientation'  => false,
+			),
+			'text_shadow' => array(
+				'default' => false,
+			),
 		);
 	}
 
 	public function get_fields() {
-		return array(
+		$fields = array(
+			// GENERAL
 			'src' => array(
 				// UI
 				'label'              => esc_html__( 'Image', 'sae' ),
@@ -79,6 +155,133 @@ class SAE_GalleryItem extends ET_Builder_Module {
 				'tab_slug'        => 'general',
 				'toggle_slug'     => 'admin_label',
 			),
+
+			// ADVANCED
+			'caption_background_color' => array(
+				// UI
+				'label'             => esc_html__( 'Caption Background', 'sae' ),
+				'description'       => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'              => 'background-field',
+				'base_name'         => 'caption_background',
+				'context'           => 'caption_background',
+				'custom_color'      => true,
+				'background_fields' => $this->generate_background_options(
+					'caption_background',
+					// Intentionally use color, gradient, and image ala button background
+					// only to keep things simple
+					'button',
+					'advanced',
+					'layout',
+					'caption_background'
+				),
+
+				// Category & Location
+				'option_category'   => 'layout',
+				'tab_slug'          => 'advanced',
+				'toggle_slug'       => 'caption',
+			),
+			'caption_padding'    => array(
+				// UI
+				'label'           => esc_html__( 'Caption Padding', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+				'default'         => '10px|10px|10px|10px',
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+
+				// Visibility
+			),
+			'caption_margin'     => array(
+				// UI
+				'label'           => esc_html__( 'Caption Margin', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'custom_margin',
+				'mobile_options'  => true,
+				'responsive'      => true,
+
+				// Defaults
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+
+				// Visibility
+			),
+		);
+
+		// background-field's fields need to be manually added as `skip` type of field so its value
+		// can be properly saved and fetched
+		$fields = array_merge(
+			$fields,
+			$this->generate_background_options(
+				'caption_background',
+				// Intentionally use color, gradient, and image ala button background
+				// only to keep things simple
+				'skip',
+				'advanced',
+				'layout',
+				'caption_background'
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Set custom CSS
+	 *
+	 * @since ??
+	 *
+	 * @param string $render_slug
+	 */
+	public function sae_set_css( $render_slug ) {
+		// SELECTORS
+		$gallery_caption_selector = "{$this->main_css_element} .sae-gallery-item-caption";
+
+
+		// CAPTION
+		// CAPTION - Background
+		$this->sae_set_field_css(
+			$render_slug,
+			'background',
+			'caption_background',
+			$gallery_caption_selector,
+			'',
+			false
+		);
+
+		// CAPTION - Margin
+		$this->sae_set_field_css(
+			$render_slug,
+			'margin',
+			'caption',
+			$gallery_caption_selector,
+			'',
+			false
+		);
+
+		// CAPTION - Padding
+		$this->sae_set_field_css(
+			$render_slug,
+			'padding',
+			'caption',
+			$gallery_caption_selector,
+			'',
+			false
 		);
 	}
 
@@ -159,6 +362,9 @@ class SAE_GalleryItem extends ET_Builder_Module {
 			'<figcaption class="sae-gallery-item-caption">%1$s</figcaption>',
 			et_core_sanitized_previously( $this->props['caption'] )
 		);
+
+		// Set styles
+		$this->sae_set_css( $render_slug );
 
 		return sprintf(
 			'<div class="sae-gallery-item-wrapper">

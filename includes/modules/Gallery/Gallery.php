@@ -55,9 +55,9 @@ class SAE_Gallery extends SAE_Builder_Module {
 					// CSS
 					'css'             => array(
 						'main' => array(
-							'border_radii'        => "%%order_class%% .sae_gallery_item",
-							'border_styles'       => "%%order_class%% .sae_gallery_item",
-							'border_styles_hover' => "%%order_class%% .sae_gallery_item:hover",
+							'border_radii'        => "{$this->main_css_element} .sae_gallery_item",
+							'border_styles'       => "{$this->main_css_element} .sae_gallery_item",
+							'border_styles_hover' => "{$this->main_css_element} .sae_gallery_item:hover",
 						),
 					),
 
@@ -83,9 +83,9 @@ class SAE_Gallery extends SAE_Builder_Module {
 					// CSS
 					'css'             => array(
 						'main' => array(
-							'border_radii'        => "%%order_class%% .sae-gallery-item-caption",
-							'border_styles'       => "%%order_class%% .sae-gallery-item-caption",
-							'border_styles_hover' => "%%order_class%% .sae-gallery-item-caption:hover",
+							'border_radii'        => "{$this->main_css_element} .sae-gallery-item-caption",
+							'border_styles'       => "{$this->main_css_element} .sae-gallery-item-caption",
+							'border_styles_hover' => "{$this->main_css_element} .sae-gallery-item-caption:hover",
 						),
 					),
 
@@ -113,7 +113,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 
 					// CSS
 					'css'             => array(
-						'main'        => '%%order_class%% .sae_gallery_item',
+						'main'        => "{$this->main_css_element} .sae_gallery_item",
 					),
 
 					// Defaults
@@ -130,7 +130,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 
 					// CSS
 					'css'             => array(
-						'main' => '%%order_class%% .sae-gallery-item-caption',
+						'main' => "{$this->main_css_element} .sae-gallery-item-caption",
 					),
 
 					// Defaults
@@ -146,7 +146,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 				'caption'  => array(
 					'label' => esc_html__( 'Title', 'et_builder' ),
 					'css'   => array(
-						'main' => "%%order_class%% .sae-gallery-item-caption"
+						'main' => "{$this->main_css_element} .sae-gallery-item-caption"
 					),
 				),
 			),
@@ -440,7 +440,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 	}
 
 	/**
-	 * Set custom CSS for current module
+	 * Set custom CSS
 	 *
 	 * @since ??
 	 *
@@ -451,9 +451,9 @@ class SAE_Gallery extends SAE_Builder_Module {
 		$column                  = intval( $this->props['column'] );
 
 		// SELECTORS
-		$gallery_wrapper_selector = '%%order_class%% .sae-gallery-wrapper';
-		$gallery_item_selector    = '%%order_class%% .sae_gallery_item';
-		$gallery_caption_selector = '%%order_class%% .sae-gallery-item-caption';
+		$gallery_wrapper_selector = "{$this->main_css_element} .sae-gallery-wrapper";
+		$gallery_item_selector    = "{$this->main_css_element} .sae_gallery_item";
+		$gallery_caption_selector = "{$this->main_css_element} .sae-gallery-item-caption";
 
 		// GALLERY WRAPPER
 		// Masonry layout style
