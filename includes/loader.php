@@ -4,6 +4,9 @@ if ( ! class_exists( 'ET_Builder_Element' ) ) {
 	return;
 }
 
+// Load base class containing custom method used by Sae modules
+require_once 'modules/class-sae-builder-module.php';
+
 $module_files = glob( __DIR__ . '/modules/*/*.php' );
 
 // Load custom Divi Builder modules
