@@ -3,6 +3,7 @@
 class SAE_Gallery extends SAE_Builder_Module {
 	public $slug                 = 'sae_gallery';
 	public $vb_support           = 'on';
+	public $main_css_element     = '%%order_class%%';
 
 	protected $module_credits = array(
 		'module_uri' => '',
