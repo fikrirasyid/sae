@@ -9,7 +9,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 	public $main_css_element         = '.sae_gallery .sae_gallery_item%%order_class%%';
 
 	protected $module_credits = array(
-		'module_uri' => '',
+		'module_uri' => 'https://github.com/fikrirasyid/sae',
 		'author'     => 'Fikri Rasyid',
 		'author_uri' => 'http://fikrirasy.id',
 	);

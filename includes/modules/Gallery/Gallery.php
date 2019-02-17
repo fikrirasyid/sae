@@ -6,7 +6,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 	public $main_css_element     = '%%order_class%%';
 
 	protected $module_credits = array(
-		'module_uri' => '',
+		'module_uri' => 'https://github.com/fikrirasyid/sae',
 		'author'     => 'Fikri Rasyid',
 		'author_uri' => 'http://fikrirasy.id',
 	);
