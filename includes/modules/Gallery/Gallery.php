@@ -334,6 +334,28 @@ class SAE_Gallery extends SAE_Builder_Module {
 			),
 
 			// Caption
+			'caption_position' => array(
+				// UI
+				'label'           => esc_html__( 'Caption Position', 'sae' ),
+				'description'     => esc_html__( '', 'sae' ),
+
+				// Settings
+				'type'            => 'select',
+				'options'         => array(
+					'below'   => esc_html__( 'Below', 'sae' ),
+					'overlay' => esc_html__( 'Overlay', 'sae' ),
+					'hidden'  => esc_html__( 'No Caption', 'sae' ),
+				),
+
+				// Defaults
+				'default'         => 'below',
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+			),
+
 			'caption_background_color' => array(
 				// UI
 				'label'             => esc_html__( 'Caption Background', 'sae' ),
@@ -547,6 +569,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 		$wrapper_classnames = array(
 			'sae-gallery-wrapper',
 			"sae-gallery-layout-{$this->props['layout']}",
+			"sae-gallery-caption-{$this->props['caption_position']}"
 		);
 
 		// Wrapper data attributes

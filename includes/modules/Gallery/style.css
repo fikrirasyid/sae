@@ -15,3 +15,19 @@
 	border-color: #333333;
 	border-style: solid;
 }
+
+/* Gallery Caption */
+.sae-gallery-caption-overlay figure {
+	position: relative;
+}
+
+.sae-gallery-caption-overlay .sae-gallery-item-caption{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.sae-gallery-caption-hidden .sae-gallery-item-caption{
+	display: none;
+}
