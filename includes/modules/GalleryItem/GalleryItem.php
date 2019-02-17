@@ -193,7 +193,6 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 				'responsive'      => true,
 
 				// Defaults
-				'default'         => '10px|10px|10px|10px',
 
 				// Category & Location
 				'option_category' => 'layout',
