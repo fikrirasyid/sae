@@ -14,7 +14,7 @@ class SaeGallery extends Component {
   /**
    * Configure module styles
    *
-   * @since ??
+   * @since 0.1
    *
    * @return array
    */

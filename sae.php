@@ -41,7 +41,7 @@ endif;
 /**
  * Sae image sizes for progressive image loading
  *
- * @since ??
+ * @since 0.1
  *
  * @return array
  */
@@ -59,7 +59,7 @@ function sae_image_sizes() {
 /**
  * Register image sizes for progresssive image loading
  *
- * @since ??
+ * @since 0.1
  *
  * @return void
  */

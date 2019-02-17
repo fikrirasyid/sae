@@ -243,7 +243,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 	/**
 	 * Set custom CSS
 	 *
-	 * @since ??
+	 * @since 0.1
 	 *
 	 * @param string $render_slug
 	 */

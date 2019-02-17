@@ -2,7 +2,7 @@
 /**
  * Base class for Sae modules. ET_Builder_Module with additional method to simplify style rendering
  *
- * @since ??
+ * @since 0.1
  */
 class SAE_Builder_Module extends ET_Builder_Module {
 	public $device_media_queries = array(
@@ -14,7 +14,7 @@ class SAE_Builder_Module extends ET_Builder_Module {
 	/**
 	 * Automatically process fields data into CSS settings
 	 *
-	 * @since ??
+	 * @since 0.1
 	 *
 	 * @param string $render_slug
 	 * @param string $field_type
@@ -190,7 +190,7 @@ class SAE_Builder_Module extends ET_Builder_Module {
 	/**
 	 * Set responsive style based on known responsive attribute structure
 	 *
-	 * @since ??
+	 * @since 0.1
 	 *
 	 * @param string $render_slug
 	 * @param string $base_attr
@@ -247,7 +247,7 @@ class SAE_Builder_Module extends ET_Builder_Module {
 	/**
 	 * Set margin/padding declaration based on attribute values
 	 *
-	 * @since ??
+	 * @since 0.1
 	 *
 	 * @param string      $type
 	 * @param string      $render_slug

@@ -15,7 +15,7 @@ const saeUtils = {
   /**
    * Automatically process fields data into CSS settings
    *
-   * @since ??
+   * @since 0.1
    *
    * @param {object}  props              module props
    * @param {string}  fieldType          field type
@@ -200,7 +200,7 @@ const saeUtils = {
   /**
    * Generate responsive CSS declaration
    *
-   * @since ??
+   * @since 0.1
    *
    * @param {Object} responsiveValues         CSS property & values in various breakpoints
    * @param {Object} responsiveValues.desktop CSS property & value for desktop breakpoint in
@@ -253,7 +253,7 @@ const saeUtils = {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/CSS/gradient
    *
-   * @since ??
+   * @since 0.1
    *
    * @param {Object} args                 gradient arguments
    * @param {string} args.type            linear|radial gradient type
@@ -295,7 +295,7 @@ const saeUtils = {
   /*
    * Evaluate field responsive status by evaluating *_last_edited attribute value
    *
-   * @since ??
+   * @since 0.1
    *
    * @param {string} lastEdited *_last_edited attribute value
    *
