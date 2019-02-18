@@ -55,3 +55,8 @@
 		opacity: 0;
 	}
 }
+
+/* Loaded image */
+.sae-actual-image-loaded .sae-image--progressive {
+	width: 100%;
+}
