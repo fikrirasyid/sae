@@ -1,0 +1,247 @@
+# Copyright (C) 2019 Fikri Rasyid
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sae 0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sae\n"
+"POT-Creation-Date: 2019-02-18 12:34:16+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n1.0.2\n"
+
+#: includes/modules/Gallery/Gallery.php:15
+msgid "Sae Gallery"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:16
+msgid "Sae Galleries"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:18
+#: includes/modules/Gallery/Gallery.php:54
+msgid "Gallery Item"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:23
+#: includes/modules/GalleryItem/GalleryItem.php:25
+msgid "Content"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:31
+msgid "Layout"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:35
+msgid "Column"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:39
+msgid "Gallery Items"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:43
+#: includes/modules/Gallery/Gallery.php:82
+#: includes/modules/GalleryItem/GalleryItem.php:37
+#: includes/modules/GalleryItem/GalleryItem.php:48
+#: includes/modules/GalleryItem/GalleryItem.php:134
+msgid "Caption"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:113
+msgid "Gallery Item Box Shadow"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:130
+#: includes/modules/GalleryItem/GalleryItem.php:79
+msgid "Caption Box Shadow"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:148
+#: includes/modules/GalleryItem/GalleryItem.php:97
+msgid "Title"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:169
+msgid "Gallery Layout"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:170
+msgid "Set layout type used by the gallery."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:175
+msgid "Masonry"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:176
+msgid "Plain"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:191
+msgid "Gallery Column"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:192
+msgid "Set number of column used by the gallery."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:225
+msgid "Gallery Column Gutter Width"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:226
+msgid "Set gutter width of the gallery column."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:263
+msgid "Item Background"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:264
+msgid "Set background for gallery item. "
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:288
+msgid "Gallery Item Padding"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:289
+#: includes/modules/Gallery/Gallery.php:314
+msgid "Set padding for gallery item."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:313
+msgid "Gallery Item Margin"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:340
+msgid "Caption Position"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:341
+msgid "Set position of the gallery caption."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:346
+msgid "Below"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:347
+msgid "Overlay"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:348
+msgid "No Caption"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:362
+#: includes/modules/GalleryItem/GalleryItem.php:162
+msgid "Caption Background"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:363
+msgid "Set background of gallery caption."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:387
+#: includes/modules/GalleryItem/GalleryItem.php:187
+msgid "Caption Padding"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:388
+msgid "Set padding of gallery caption."
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:413
+#: includes/modules/GalleryItem/GalleryItem.php:206
+msgid "Caption Margin"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:414
+msgid "Set margin of gallery caption."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:18
+msgid "Sae Gallery Item"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:19
+msgid "Sae Gallery Items"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:20
+#: includes/modules/GalleryItem/GalleryItem.php:117
+msgid "Image"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:29
+#: includes/modules/GalleryItem/GalleryItem.php:147
+msgid "Admin Label"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:118
+msgid "Set image of gallery item."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:122
+msgid "Upload an image"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:123
+msgid "Choose an Image"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:124
+msgid "Set As Image"
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:135
+msgid "Set caption of gallery item."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:148
+msgid "Set setting label of gallery item."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:163
+msgid "Set background of gallery item."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:188
+msgid "Set padding of gallery item."
+msgstr ""
+
+#: includes/modules/GalleryItem/GalleryItem.php:207
+msgid "Set margin of gallery item."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Sae"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Experimental gallery and progressive image modules for Divi that spark joy"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Fikri Rasyid"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://fikrirasy.id"
+msgstr ""
