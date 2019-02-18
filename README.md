@@ -1,29 +1,32 @@
-**Sae** is experimental gallery module for [Divi](https://www.elegantthemes.com/gallery/divi/) that sparks joy. This module works and being installed as WordPress plugin.
+## What
+__Sae__ is gallery module for [Divi](https://www.elegantthemes.com/gallery/divi/) which uses [Low Quality Image Placeholders (LQIP)](https://cloudinary.com/blog/low_quality_image_placeholders_lqip_explained) approach to keep page rendering fast.
 
-Sae is currently authored by [Fikri Rasyid](http://fikrirasy.id/about/)
+### What's with the name?
+__Sae__ is Sundanese (local tribe of Indonesian) language  for `good` in polite form (Sundanese has different word for different level of formality and / or politeness)
 
-## Sae? Wat?
-`Sae` is sundanese language for `good` in polite form (Sundanese language has different word for different level of formality and politeness).
+I just need a decent and unique name for this project and I'm Sundanese, so that's it.
 
-I just need a decent and _unique_ name for this project, and i happen to be sundanese, so that's it.
+## Why
+I recently gain more interest in photography which leads me to post tons of photo on [my personal blog](https://fikrirasyid.com) which uses Divi. I exhibit lots of photo per page and I want to display the photos on the highest quality possible (See [this "blogazine" look post](https://fikrirasyid.com/spain-trip-2018/) or [this post](https://fikrirasyid.com/japan-trip-2017/) for example); Unfortunately, it ends up making the page slower.
 
-## Experimental?
-I made this plugin to do ~fancy~ exciting stuff on [my personal blog](http://fikrirasyid.com) which i posted tons of photos. Hence this plugin is totally personal and subjective.
+Hence this custom module.
 
-DISCLAIMER: I work at Elegant Themes and I think it is good idea to explore and test our stuff in real world setting. However what i do and experiment in this plugin is my personal view and doesn't reflect the view of my employer.
+## How
+__Sae__ works with Low Quality Image Placeholder (LQIP) approach:
 
-## Sparks Joy? Huh?
-The plugin is opiniated and subjective: i simply try to cater my own needs so i keep the scope limited so i can focus on doing things on this plugin that makes me happy and not reasonably doing anything that isn't really interest me.
+1. __Sae__ registers image sizes which tries to hit the sweet spot of enough for various breakpoint but not too much (see: `sae_image_sizes()`; __Sae__ registers 6 new image size to cater mobile to desktop retina display). Note: this might cause your upload directory size significantly bigger. If you have very limited size of storage, this might not be for you
+2. When the image is set for the gallery, on front end, __Sae__ will swap the assigned image with placeholder image of given image which has 150px width size
+3. On front end page load, this 150px width size is the one that is being loaded on page load which makes the document render quick. Once the document render is done, __Sae__ examine the width of the module then load the most suitable image size and display the suitable image size instead.
 
-ie: I don't plan to make this plugin to support IE or legacy browser. They don't spark joy.
+Currently, __Sae__ offers two kind of gallery layout: list of image / masonry. The Masonry layout use pure CSS solution based on CSS Column property.
 
-## Gallery module?
-Yeah, at least for now. The plugin is right now is on its pre v1 phase. What i aim on this phase is:
+## Who
+__Sae__ is currently developed by [Fikri Rasyid](http://fikrirasy.id/).
 
-### v0.x
-- It is sort of MVP phase. I just want to make it work and use it on my blog
-- The plugin has Gallery module (with slider module-like structure) on Divi
-- The gallery has two layouts: CSS-column powered Masonry layout and Plain list of image layout
-- :wat:... CSS-column for gallery masonry layout? Told ya this is experimental
+***
 
-Last updated: 2019, February 18th (GMT+7)
+## Notes
+- __Sae__'s repository is publicly available at https://github.com/fikrirasyid/sae
+- __Sae__ is developed using [Divi's create-divi-extension](https://github.com/elegantthemes/create-divi-extension) and compatible with Divi Visual Builder
+- __Sae__ is licensed under GPL
+- There is a plan for more gallery layout(s) and more modules, but I keep my expectation reasonable since I develop __Sae__ on my spare time.
