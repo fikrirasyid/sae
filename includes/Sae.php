@@ -5,7 +5,7 @@ class SAE_Sae extends DiviExtension {
 	/**
 	 * The gettext domain for the extension's translations.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 *
 	 * @var string
 	 */
@@ -14,7 +14,7 @@ class SAE_Sae extends DiviExtension {
 	/**
 	 * The extension's WP Plugin name.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 *
 	 * @var string
 	 */
@@ -23,11 +23,11 @@ class SAE_Sae extends DiviExtension {
 	/**
 	 * The extension's version
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.0';
+	public $version = '0.1';
 
 	/**
 	 * SAE_Sae constructor.

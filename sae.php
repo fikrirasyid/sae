@@ -3,7 +3,7 @@
 Plugin Name: Sae
 Plugin URI:
 Description: Experimental gallery and progressive image modules for Divi that spark joy
-Version:     1.0.0
+Version:     0.1
 Author:      Fikri Rasyid
 Author URI:  http://fikrirasy.id
 License:     GPL2
@@ -30,7 +30,7 @@ if ( ! function_exists( 'sae_initialize_extension' ) ):
 /**
  * Creates the extension's main class instance.
  *
- * @since 1.0.0
+ * @since 0.1
  */
 function sae_initialize_extension() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/Sae.php';
