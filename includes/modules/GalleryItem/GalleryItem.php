@@ -115,7 +115,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'src' => array(
 				// UI
 				'label'              => esc_html__( 'Image', 'sae' ),
-				'description'        => esc_html__( '', 'sae' ),
+				'description'        => esc_html__( 'Set image of gallery item.', 'sae' ),
 
 				// Settings
 				'type'               => 'upload',
@@ -132,7 +132,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'caption' => array(
 				// UI
 				'label'           => esc_html__( 'Caption', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set caption of gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'text',
@@ -145,7 +145,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'admin_title' => array(
 				// UI
 				'label'           => esc_html__( 'Admin Label', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set setting label of gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'text',
@@ -160,7 +160,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'caption_background_color' => array(
 				// UI
 				'label'             => esc_html__( 'Caption Background', 'sae' ),
-				'description'       => esc_html__( '', 'sae' ),
+				'description'       => esc_html__( 'Set background of gallery item.', 'sae' ),
 
 				// Settings
 				'type'              => 'background-field',
@@ -185,7 +185,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'caption_padding'    => array(
 				// UI
 				'label'           => esc_html__( 'Caption Padding', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set padding of gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',
@@ -204,7 +204,7 @@ class SAE_GalleryItem extends SAE_Builder_Module {
 			'caption_margin'     => array(
 				// UI
 				'label'           => esc_html__( 'Caption Margin', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set margin of gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',

@@ -167,7 +167,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'layout' => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Layout', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set layout type used by the gallery.', 'sae' ),
 
 				// Settings
 				'type'            => 'select',
@@ -189,7 +189,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'column' => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Column', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set number of column used by the gallery.', 'sae' ),
 
 				// Settings
 				'type'            => 'range',
@@ -223,7 +223,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'column_gutter_width' => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Column Gutter Width', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set gutter width of the gallery column.', 'sae' ),
 
 				// Settings
 				'type'            => 'range',
@@ -261,7 +261,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'item_background_color' => array(
 				// UI
 				'label'             => esc_html__( 'Item Background', 'sae' ),
-				'description'       => esc_html__( '', 'sae' ),
+				'description'       => esc_html__( 'Set background for gallery item. ', 'sae' ),
 
 				// Settings
 				'type'              => 'background-field',
@@ -286,7 +286,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'item_padding'    => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Item Padding', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set padding for gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',
@@ -311,7 +311,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'item_margin'     => array(
 				// UI
 				'label'           => esc_html__( 'Gallery Item Margin', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set padding for gallery item.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',
@@ -338,7 +338,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'caption_position' => array(
 				// UI
 				'label'           => esc_html__( 'Caption Position', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set position of the gallery caption.', 'sae' ),
 
 				// Settings
 				'type'            => 'select',
@@ -360,7 +360,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'caption_background_color' => array(
 				// UI
 				'label'             => esc_html__( 'Caption Background', 'sae' ),
-				'description'       => esc_html__( '', 'sae' ),
+				'description'       => esc_html__( 'Set background of gallery caption.', 'sae' ),
 
 				// Settings
 				'type'              => 'background-field',
@@ -385,7 +385,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'caption_padding'    => array(
 				// UI
 				'label'           => esc_html__( 'Caption Padding', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set padding of gallery caption.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',
@@ -411,7 +411,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 			'caption_margin'     => array(
 				// UI
 				'label'           => esc_html__( 'Caption Margin', 'sae' ),
-				'description'     => esc_html__( '', 'sae' ),
+				'description'     => esc_html__( 'Set margin of gallery caption.', 'sae' ),
 
 				// Settings
 				'type'            => 'custom_margin',
