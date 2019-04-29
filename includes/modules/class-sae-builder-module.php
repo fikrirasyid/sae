@@ -181,7 +181,61 @@ class SAE_Builder_Module extends ET_Builder_Module {
 					);
 				}
 				break;
+			case 'column_flex_grid':
+				$column = array(
+					'desktop' => self::$_->array_get( $this->props, $base_attr_name, '' ),
+					'tablet'  => self::$_->array_get( $this->props, "{$base_attr_name}_tablet", '' ),
+					'phone'   => self::$_->array_get( $this->props, "{$base_attr_name}_phone", '' ),
+				);
 
+				// Check responsive status
+				$is_column_responsive = et_pb_get_responsive_status( self::$_->array_get(
+					$this->props,
+					"{$base_attr_name}_last_edited",
+					''
+				) );
+
+				$is_column_gutter_responsive = et_pb_get_responsive_status( self::$_->array_get(
+					$this->props,
+					"column_gutter_width_last_edited",
+					''
+				) );
+
+				foreach ( $column as $device => $value ) {
+					if ( '' === $value || ! $is_column_responsive && 'desktop' !== $device ) {
+						continue;
+					}
+
+					$column_gutter_width_attr = 'desktop' === $device || ! $is_column_gutter_responsive ?
+						'column_gutter_width' : "column_gutter_width_{$device}";
+					$column_gutter_width      = self::$_->array_get(
+						$this->props,
+						$column_gutter_width_attr,
+						'10'
+					);
+					$fallback_width           = 100 / intval( $value ) . '%';
+					$width                    = "calc( ( 100% / {$value} ) - ( {$column_gutter_width} / 2 ) )";
+					$declaration              = sprintf(
+						'width: %1$s; width: %2$s;',
+						$fallback_width,
+						$width
+					);
+
+					// Prepare the style
+					$style = array(
+						'selector'    => $selector,
+						'declaration' => $declaration,
+					);
+
+					// If related media query related to current device is found, use it
+					if ( isset( $this->device_media_queries[ $device ] ) ) {
+						$style['media_query'] = ET_Builder_Element::get_media_query( $this->device_media_queries[ $device ] );
+					}
+
+					ET_Builder_Element::set_style( $render_slug, $style );
+				}
+
+				break;
 			default:
 				break;
 		}

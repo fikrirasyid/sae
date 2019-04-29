@@ -173,6 +173,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 				'type'            => 'select',
 				'options'         => array(
 					'masonry'  => esc_html__( 'Masonry', 'sae' ),
+					'grid'     => esc_html__( 'Grid', 'sae' ),
 					'plain'    => esc_html__( 'Plain', 'sae' ),
 				),
 
@@ -216,6 +217,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
+						'grid',
 						'masonry',
 					),
 				),
@@ -249,6 +251,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 				// Visibility
 				'show_if'         => array(
 					'layout'      => array(
+						'grid',
 						'masonry',
 					),
 				),
@@ -499,6 +502,19 @@ class SAE_Gallery extends SAE_Builder_Module {
 				$gallery_wrapper_selector,
 				'column-gap',
 				true
+			);
+		}
+
+		// Grid layout style
+		if ( 'grid' === $this->props['layout'] ) {
+			// GALLERY WRAPPER - Column
+			$this->sae_set_field_css(
+				$render_slug,
+				'column_flex_grid',
+				'column',
+				$gallery_item_selector,
+				'width',
+				false
 			);
 		}
 

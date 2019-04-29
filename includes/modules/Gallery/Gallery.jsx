@@ -50,6 +50,18 @@ class SaeGallery extends Component {
       ));
     }
 
+    // Grid layout style
+    if ('grid' === props.layout) {
+      // Gallery - Column width
+      additionalCss = additionalCss.concat(saeUtils.generateCss(
+        props,
+        'column_flex_grid',
+        'column',
+        galleryItemSelector,
+        'width',
+        false
+      ));
+    }
 
     // GALLERY ITEM
     // GALLERY ITEM - Background

@@ -10,6 +10,19 @@
 	break-inside: avoid;
 }
 
+/* Gallery Layout - Grid */
+.sae-gallery-layout-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+}
+
+.sae-gallery-layout-grid .sae_gallery_item {
+	width: 33%;
+	width: calc((100% / 3) - 10px);
+}
+
 /* Gallery Item */
 .sae_gallery .sae_gallery_item {
 	border-color: #333333;
