@@ -211,14 +211,15 @@ class SAE_Builder_Module extends ET_Builder_Module {
 					$column_gutter_width      = self::$_->array_get(
 						$this->props,
 						$column_gutter_width_attr,
-						'10'
+						'0px'
 					);
-					$fallback_width           = 100 / intval( $value ) . '%';
-					$width                    = "calc( ( 100% / {$value} ) - ( {$column_gutter_width} / 2 ) )";
+					$width                    = $column_gutter_width ?
+						"calc( ( 100% / {$value} ) - {$column_gutter_width} )" :
+						"calc( 100% / {$value} )";
 					$declaration              = sprintf(
-						'width: %1$s; width: %2$s;',
-						$fallback_width,
-						$width
+						'width: %1$s; margin-left: calc( %2$s / 2 ); margin-right: calc( %2$s / 2 );',
+						esc_html( $width ),
+						esc_html( $column_gutter_width )
 					);
 
 					// Prepare the style

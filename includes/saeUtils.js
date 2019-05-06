@@ -224,13 +224,16 @@ const saeUtils = {
 
             const columnGutterWidthAttr = 'desktop' === columnAttrBreakpoint || !isColumnGutterWidthResponsive ?
               'column_gutter_width' : `column_gutter_width_${columnAttrBreakpoint}`;
-            const columnGutterWidth = get(props, [columnGutterWidthAttr], '10');
-            const fallbackWidth = `${100 / parseInt(columnAttrValue)}%`;
-            const width = `calc( ( 100% / ${columnAttrValue} ) - ( ${columnGutterWidth} / 2 ) )`;
+            const columnGutterWidth = get(props, [columnGutterWidthAttr], '0px');
+            const width = columnGutterWidth ?
+              `calc( ( 100% / ${columnAttrValue} ) - ${columnGutterWidth} )` :
+              `calc( 100% / ${columnAttrValue} )`;
 
             columnFlexGridCss.push({
               selector: selector,
-              declaration: `width: ${fallbackWidth}; width: ${width}`,
+              declaration: `width: ${width};
+                margin-left: calc(${columnGutterWidth} / 2);
+                margin-right: calc(${columnGutterWidth} / 2);`,
               device: columnAttrBreakpoint,
             });
           });
