@@ -349,6 +349,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 					'below'   => esc_html__( 'Below', 'sae' ),
 					'overlay' => esc_html__( 'Overlay', 'sae' ),
 					'hidden'  => esc_html__( 'No Caption', 'sae' ),
+					'index'   => esc_html__( 'Table of Content', 'sae' ),
 				),
 
 				// Defaults
@@ -516,6 +517,17 @@ class SAE_Gallery extends SAE_Builder_Module {
 				'width',
 				false
 			);
+
+			if ( 'index' === $this->props['caption_position'] ) {
+				$this->sae_set_field_css(
+					$render_slug,
+					'column_flex_grid',
+					'column',
+					"{$this->main_css_element} .sae-gallery-item-caption--index",
+					'width',
+					false
+				);
+			}
 		}
 
 		// GALLERY ITEM
@@ -581,12 +593,58 @@ class SAE_Gallery extends SAE_Builder_Module {
 		);
 	}
 
+	/**
+	 * Render table of content caption item based on regex replace match against module item shortcode
+	 *
+	 * @since 0.2
+	 *
+	 * @param array $m Regular expression matched array
+	 * @return string table of content caption
+	 */
+	public function render_table_of_content_caption( $m ) {
+		$attrs   = shortcode_parse_atts( $m[3] );
+		$caption = isset( $attrs['caption'] ) ? $attrs['caption'] : '';
+
+		return sprintf('
+			<li class="sae-gallery-gallery-caption-list--item">%1$s</li>',
+			esc_html( $caption )
+		);
+	}
+
+	/**
+	 * Render table of content captions
+	 *
+	 * @since 0.2
+	 *
+	 * @param string table of content shortcode layout
+	 * @return string rendered table of content captions
+	 */
+	public function render_table_of_content_captions( $content = '' ) {
+		$pattern  = get_shortcode_regex();
+		$captions = preg_replace_callback(
+			"/$pattern/s",
+			array( $this, 'render_table_of_content_caption' ),
+			$content
+		);
+
+		return sprintf(
+			'<div class="sae-gallery-item-caption sae-gallery-item-caption--index">
+				<ol class="sae-gallery-item-caption-list">
+					%1$s
+				</ol>
+			</div>',
+			et_core_sanitized_previously( $captions )
+		);
+	}
+
 	public function render( $attrs, $content = null, $render_slug ) {
+		$caption_position = $this->props['caption_position'];
+
 		// Wrapper classnames
 		$wrapper_classnames = array(
 			'sae-gallery-wrapper',
 			"sae-gallery-layout-{$this->props['layout']}",
-			"sae-gallery-caption-{$this->props['caption_position']}"
+			"sae-gallery-caption-{$caption_position}"
 		);
 
 		// Wrapper data attributes
@@ -614,11 +672,18 @@ class SAE_Gallery extends SAE_Builder_Module {
 			);
 		}
 
+		$gallery_items = $this->content;
+
+		// Render table of content caption
+		if ( 'index' === $caption_position ) {
+			$gallery_items .= $this->render_table_of_content_captions( $content );
+		}
+
 		return sprintf(
 			'<div class="%1$s"%2$s>%3$s</div>',
 			esc_attr( $rendered_wrapper_classnames ),
 			et_core_sanitized_previously( $rendered_data_attrs ),
-			et_core_sanitized_previously( $this->content )
+			et_core_sanitized_previously( $gallery_items )
 		);
 	}
 }
