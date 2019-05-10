@@ -173,7 +173,7 @@ class SaeGallery extends Component {
     const wrapperClassname = [
       'sae-gallery-wrapper',
       `sae-gallery-layout-${this.props.layout}`,
-      `sae-gallery-caption-${this.props.caption_position}`,
+      `sae-gallery-wrapper--caption-${this.props.caption_position}`,
     ];
 
     // Wrapper data attributes

@@ -644,7 +644,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 		$wrapper_classnames = array(
 			'sae-gallery-wrapper',
 			"sae-gallery-layout-{$this->props['layout']}",
-			"sae-gallery-caption-{$caption_position}"
+			"sae-gallery-wrapper--caption-{$caption_position}"
 		);
 
 		// Wrapper data attributes
