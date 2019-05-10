@@ -50,6 +50,29 @@ class SaeGallery extends Component {
       ));
     }
 
+    // Grid layout style
+    if ('grid' === props.layout) {
+      // Gallery - Column width
+      additionalCss = additionalCss.concat(saeUtils.generateCss(
+        props,
+        'column_flex_grid',
+        'column',
+        galleryItemSelector,
+        'width',
+        false
+      ));
+
+      if ('index' === props.caption_position) {
+        additionalCss = additionalCss.concat(saeUtils.generateCss(
+          props,
+          'column_flex_grid',
+          'column',
+          '%%order_class%% .sae-gallery-item-caption--index',
+          'width',
+          false
+        ));
+      }
+    }
 
     // GALLERY ITEM
     // GALLERY ITEM - Background
@@ -117,6 +140,30 @@ class SaeGallery extends Component {
   }
 
   /**
+   * Render table of content caption
+   *
+   * @since 0.2
+   */
+  renderTableOfContentCaptions() {
+    if ('index' !== this.props.caption_position) {
+      return false;
+    }
+
+    const tableOfContentItem = this.props.content.map(item => {
+      return (<li
+        className='sae-gallery-gallery-caption-list--item'
+        key={`sae-gallery-caption-index-${item.props.address}`}
+      >{item.props.attrs.caption}</li>);
+    });
+
+    return <div className='sae-gallery-item-caption sae-gallery-item-caption--index'>
+      <ol className='sae-gallery-item-caption-list'>
+        {tableOfContentItem}
+      </ol>
+    </div>;
+  }
+
+  /**
    * Module render in VB
    */
   render() {
@@ -126,7 +173,7 @@ class SaeGallery extends Component {
     const wrapperClassname = [
       'sae-gallery-wrapper',
       `sae-gallery-layout-${this.props.layout}`,
-      `sae-gallery-caption-${this.props.caption_position}`,
+      `sae-gallery-wrapper--caption-${this.props.caption_position}`,
     ];
 
     // Wrapper data attributes
@@ -142,6 +189,7 @@ class SaeGallery extends Component {
     return (
       <div className={utils.classnames(wrapperClassname)} {...wrapperDataAttrs}>
         {this.props.content}
+        {this.renderTableOfContentCaptions()}
       </div>
     );
   }

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sae 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sae\n"
-"POT-Creation-Date: 2019-02-18 12:34:16+00:00\n"
+"POT-Creation-Date: 2019-05-10 17:21:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,147 +32,160 @@ msgstr ""
 msgid "Sae Galleries"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:18
-#: includes/modules/Gallery/Gallery.php:54
+#: includes/modules/Gallery/Gallery.php:19
+#: includes/modules/Gallery/Gallery.php:55
 msgid "Gallery Item"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:23
+#: includes/modules/Gallery/Gallery.php:24
 #: includes/modules/GalleryItem/GalleryItem.php:25
 msgid "Content"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:31
+#: includes/modules/Gallery/Gallery.php:32
 msgid "Layout"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:35
+#: includes/modules/Gallery/Gallery.php:36
 msgid "Column"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:39
+#: includes/modules/Gallery/Gallery.php:40
 msgid "Gallery Items"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:43
-#: includes/modules/Gallery/Gallery.php:82
+#: includes/modules/Gallery/Gallery.php:44
+#: includes/modules/Gallery/Gallery.php:83
 #: includes/modules/GalleryItem/GalleryItem.php:37
 #: includes/modules/GalleryItem/GalleryItem.php:48
 #: includes/modules/GalleryItem/GalleryItem.php:134
+#: includes/modules/Image/Image.php:30 includes/modules/Image/Image.php:39
+#: includes/modules/Image/Image.php:71
 msgid "Caption"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:113
+#: includes/modules/Gallery/Gallery.php:114
 msgid "Gallery Item Box Shadow"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:130
+#: includes/modules/Gallery/Gallery.php:131
 #: includes/modules/GalleryItem/GalleryItem.php:79
 msgid "Caption Box Shadow"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:148
+#: includes/modules/Gallery/Gallery.php:149
 #: includes/modules/GalleryItem/GalleryItem.php:97
 msgid "Title"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:169
+#: includes/modules/Gallery/Gallery.php:170
 msgid "Gallery Layout"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:170
+#: includes/modules/Gallery/Gallery.php:171
 msgid "Set layout type used by the gallery."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:175
+#: includes/modules/Gallery/Gallery.php:176
 msgid "Masonry"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:176
+#: includes/modules/Gallery/Gallery.php:177
+msgid "Grid"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:178
 msgid "Plain"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:191
+#: includes/modules/Gallery/Gallery.php:193
 msgid "Gallery Column"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:192
+#: includes/modules/Gallery/Gallery.php:194
 msgid "Set number of column used by the gallery."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:225
+#: includes/modules/Gallery/Gallery.php:228
 msgid "Gallery Column Gutter Width"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:226
+#: includes/modules/Gallery/Gallery.php:229
 msgid "Set gutter width of the gallery column."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:263
+#: includes/modules/Gallery/Gallery.php:267
 msgid "Item Background"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:264
+#: includes/modules/Gallery/Gallery.php:268
 msgid "Set background for gallery item. "
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:288
+#: includes/modules/Gallery/Gallery.php:292
 msgid "Gallery Item Padding"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:289
-#: includes/modules/Gallery/Gallery.php:314
+#: includes/modules/Gallery/Gallery.php:293
+#: includes/modules/Gallery/Gallery.php:318
 msgid "Set padding for gallery item."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:313
+#: includes/modules/Gallery/Gallery.php:317
 msgid "Gallery Item Margin"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:340
+#: includes/modules/Gallery/Gallery.php:344 includes/modules/Image/Image.php:86
 msgid "Caption Position"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:341
+#: includes/modules/Gallery/Gallery.php:345
 msgid "Set position of the gallery caption."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:346
+#: includes/modules/Gallery/Gallery.php:350 includes/modules/Image/Image.php:92
 msgid "Below"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:347
+#: includes/modules/Gallery/Gallery.php:351 includes/modules/Image/Image.php:93
 msgid "Overlay"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:348
+#: includes/modules/Gallery/Gallery.php:352 includes/modules/Image/Image.php:94
 msgid "No Caption"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:362
+#: includes/modules/Gallery/Gallery.php:353
+msgid "Table of Content"
+msgstr ""
+
+#: includes/modules/Gallery/Gallery.php:367
 #: includes/modules/GalleryItem/GalleryItem.php:162
+#: includes/modules/Image/Image.php:108
 msgid "Caption Background"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:363
+#: includes/modules/Gallery/Gallery.php:368
 msgid "Set background of gallery caption."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:387
+#: includes/modules/Gallery/Gallery.php:392
 #: includes/modules/GalleryItem/GalleryItem.php:187
+#: includes/modules/Image/Image.php:133
 msgid "Caption Padding"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:388
+#: includes/modules/Gallery/Gallery.php:393
 msgid "Set padding of gallery caption."
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:413
+#: includes/modules/Gallery/Gallery.php:418
 #: includes/modules/GalleryItem/GalleryItem.php:206
+#: includes/modules/Image/Image.php:152
 msgid "Caption Margin"
 msgstr ""
 
-#: includes/modules/Gallery/Gallery.php:414
+#: includes/modules/Gallery/Gallery.php:419
 msgid "Set margin of gallery caption."
 msgstr ""
 
@@ -186,6 +199,7 @@ msgstr ""
 
 #: includes/modules/GalleryItem/GalleryItem.php:20
 #: includes/modules/GalleryItem/GalleryItem.php:117
+#: includes/modules/Image/Image.php:22 includes/modules/Image/Image.php:54
 msgid "Image"
 msgstr ""
 
@@ -199,14 +213,17 @@ msgid "Set image of gallery item."
 msgstr ""
 
 #: includes/modules/GalleryItem/GalleryItem.php:122
+#: includes/modules/Image/Image.php:59
 msgid "Upload an image"
 msgstr ""
 
 #: includes/modules/GalleryItem/GalleryItem.php:123
+#: includes/modules/Image/Image.php:60
 msgid "Choose an Image"
 msgstr ""
 
 #: includes/modules/GalleryItem/GalleryItem.php:124
+#: includes/modules/Image/Image.php:61
 msgid "Set As Image"
 msgstr ""
 
@@ -228,6 +245,38 @@ msgstr ""
 
 #: includes/modules/GalleryItem/GalleryItem.php:207
 msgid "Set margin of gallery item."
+msgstr ""
+
+#: includes/modules/Image/Image.php:15
+msgid "Sae Image"
+msgstr ""
+
+#: includes/modules/Image/Image.php:16
+msgid "Sae Images"
+msgstr ""
+
+#: includes/modules/Image/Image.php:55
+msgid "Set url of image."
+msgstr ""
+
+#: includes/modules/Image/Image.php:72
+msgid "Set caption of image."
+msgstr ""
+
+#: includes/modules/Image/Image.php:87
+msgid "Set position of the image caption."
+msgstr ""
+
+#: includes/modules/Image/Image.php:109
+msgid "Set background of image."
+msgstr ""
+
+#: includes/modules/Image/Image.php:134
+msgid "Set padding of image."
+msgstr ""
+
+#: includes/modules/Image/Image.php:153
+msgid "Set margin of image."
 msgstr ""
 
 #. Plugin Name of the plugin/theme

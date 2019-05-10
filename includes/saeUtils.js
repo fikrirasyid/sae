@@ -189,6 +189,60 @@ const saeUtils = {
         ));
 
         break;
+      case 'column_flex_grid':
+          const columnValues = {
+            desktop: get(props, `${baseAttrName}`, ''),
+            tablet: get(props, `${baseAttrName}_tablet`, ''),
+            phone: get(props, `${baseAttrName}_phone`, ''),
+          };
+
+          // Check responsive status
+          const isColumnResponsive = saeUtils.isFieldResponsive(get(
+            props,
+            `${baseAttrName}_last_edited`,
+            ''
+          ));
+
+          if (!isColumnResponsive) {
+            delete columnValues.tablet;
+            delete columnValues.phone;
+          }
+
+          // Populate column style configuration
+          const isColumnGutterWidthResponsive = saeUtils.isFieldResponsive(get(
+            props,
+            'column_gutter_width_last_edited',
+            ''
+          ));
+
+          const columnFlexGridCss = [];
+
+          forEach(columnValues, (columnAttrValue, columnAttrBreakpoint) => {
+            if (!columnAttrValue) {
+              return;
+            }
+
+            const columnGutterWidthAttr = 'desktop' === columnAttrBreakpoint || !isColumnGutterWidthResponsive ?
+              'column_gutter_width' : `column_gutter_width_${columnAttrBreakpoint}`;
+            const columnGutterWidth = get(props, [columnGutterWidthAttr], '0px');
+            const width = columnGutterWidth ?
+              `calc( ( 100% / ${columnAttrValue} ) - ${columnGutterWidth} )` :
+              `calc( 100% / ${columnAttrValue} )`;
+
+            columnFlexGridCss.push({
+              selector: selector,
+              declaration: `width: ${width};
+                margin-left: calc(${columnGutterWidth} / 2);
+                margin-right: calc(${columnGutterWidth} / 2);`,
+              device: columnAttrBreakpoint,
+            });
+          });
+
+          // Append grid column styling
+          if (columnFlexGridCss.length > 0) {
+            additionalCss.push(columnFlexGridCss);
+          }
+        break;
       default:
         break;
 
