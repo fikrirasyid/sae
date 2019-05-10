@@ -63,12 +63,20 @@ class SaeImage extends Component {
    * Module render in VB
    */
   render() {
+    const utils = window.ET_Builder.API.Utils;
+
+    // Wrapper classname
+    const wrapperClassname = [
+      'sae-image-wrapper',
+      `sae-image-wrapper--caption-${this.props.caption_position}`,
+    ]
+
     const caption = '' === get(this.props, 'caption', '') ? false : <figcaption className="sae-image-caption">
       {get(this.props, 'caption', '')}
     </figcaption>;
 
     return (
-      <div className="sae-image-wrapper">
+      <div className={utils.classnames(wrapperClassname)}>
         <figure>
           <div className="sae-image-image-wrapper">
             <img src={this.props.src} alt={this.props.title} />

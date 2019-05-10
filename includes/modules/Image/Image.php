@@ -37,6 +37,9 @@ class SAE_Image extends SAE_Builder_Module {
 				'module' => array(
 					'label'       => esc_html__( 'Caption', 'custom_module' ),
 					'toggle_slug' => 'caption',
+					'css'   => array(
+						'main' => "{$this->main_css_element} .sae-image-caption"
+					),
 				),
 			),
 		);
@@ -77,6 +80,28 @@ class SAE_Image extends SAE_Builder_Module {
 			),
 
 			// ADVANCED
+			'caption_position' => array(
+				// UI
+				'label'           => esc_html__( 'Caption Position', 'sae' ),
+				'description'     => esc_html__( 'Set position of the image caption.', 'sae' ),
+
+				// Settings
+				'type'            => 'select',
+				'options'         => array(
+					'below'   => esc_html__( 'Below', 'sae' ),
+					'overlay' => esc_html__( 'Overlay', 'sae' ),
+					'hidden'  => esc_html__( 'No Caption', 'sae' ),
+				),
+
+				// Defaults
+				'default'         => 'below',
+
+				// Category & Location
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'caption',
+			),
+
 			'caption_background_color' => array(
 				// UI
 				'label'             => esc_html__( 'Caption Background', 'sae' ),
@@ -274,7 +299,16 @@ class SAE_Image extends SAE_Builder_Module {
 			$image_classnames[] = 'sae-image';
 		}
 
-		$rendered_image_classnames = implode( ' ', $image_classnames );
+		$caption_position = $this->props['caption_position'];
+
+		// Wrapper classnames
+		$wrapper_classnames = array(
+			'sae-image-wrapper',
+			"sae-image-wrapper--caption-{$caption_position}"
+		);
+
+		$rendered_wrapper_classnames = implode( ' ', $wrapper_classnames );
+		$rendered_image_classnames   = implode( ' ', $image_classnames );
 
 		// Caption configuration
 		$caption = '' === $this->props['caption'] ? '' : sprintf(
@@ -286,16 +320,17 @@ class SAE_Image extends SAE_Builder_Module {
 		$this->sae_set_css( $render_slug );
 
 		return sprintf(
-			'<div class="sae-image-wrapper">
+			'<div class="%3$s">
 				<figure>
 					<div class="sae-image-wrapper">
-						<img src="%1$s" alt="%2$s" class="%3$s"%4$s />
+						<img src="%1$s" alt="%2$s" class="%4$s"%5$s />
 					</div>
-					%5$s
+					%6$s
 				</figure>
 			</div>',
 			esc_attr( $src ),
 			esc_attr( $this->props['caption'] ),
+			esc_attr( $rendered_wrapper_classnames ),
 			esc_attr( $rendered_image_classnames ),
 			et_core_sanitized_previously( $rendered_image_data_attrs ),
 			et_core_sanitized_previously( $caption )

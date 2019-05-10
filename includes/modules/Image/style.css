@@ -2,6 +2,7 @@
 	margin: 0;
 }
 
+/* Caption */
 .sae-image-caption {
 	display: block;
 	font-size: 12px;
@@ -13,4 +14,20 @@
 	border-width: 0px;
 	border-color: #333333;
 	border-style: solid;
+}
+
+/* Caption Position */
+.sae-image-wrapper--caption-overlay {
+	position: relative;
+}
+
+.sae-image-wrapper--caption-overlay .sae-image-caption {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.sae-image-wrapper--caption-hidden .sae-image-caption {
+	display: none;
 }
