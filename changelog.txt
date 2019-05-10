@@ -1,0 +1,16 @@
+# Version 0.2 (2019-05-11)
+## New stuffs:
+- Adding image module
+- Adding gallery layout: 'grid'
+- Adding gallery caption position: 'table of content'
+
+## Improvements:
+- Use more accurate classname for caption position on gallery
+- Adding module icon for gallery and image modules
+
+# Version 0.1 (2019-02-19)
+
+MVP-like release with simple initial key features:
+- CSS-based like masonry gallery (using CSS Column)
+- Reasonable and decent option for customization
+- Low Quality Image Placeholder (LQIP) based approach for fast page rendering
