@@ -14,6 +14,7 @@ class SAE_Gallery extends SAE_Builder_Module {
 	public function init() {
 		$this->name                    = esc_html__( 'Sae Gallery', 'sae' );
 		$this->plural                  = esc_html__( 'Sae Galleries', 'sae' );
+		$this->icon                    = 'S';
 		$this->child_slug              = 'sae_gallery_item';
 		$this->child_item_text         = esc_html__( 'Gallery Item', 'sae' );
 		$this->settings_modal_toggles  = array(

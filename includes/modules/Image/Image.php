@@ -14,6 +14,7 @@ class SAE_Image extends SAE_Builder_Module {
 	public function init() {
 		$this->name                   = esc_html__( 'Sae Image', 'sae' );
 		$this->plural                 = esc_html__( 'Sae Images', 'sae' );
+		$this->icon                   = 'D';
 		$this->settings_modal_toggles = array(
 			'general'  => array(
 				'toggles' => array(
