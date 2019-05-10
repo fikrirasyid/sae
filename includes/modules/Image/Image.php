@@ -62,13 +62,13 @@ class SAE_Image extends SAE_Builder_Module {
 				'tab_slug'           => 'general',
 				'toggle_slug'        => 'main_content',
 			),
-			'content' => array(
+			'caption' => array(
 				// UI
 				'label'           => esc_html__( 'Caption', 'sae' ),
 				'description'     => esc_html__( 'Set caption of image.', 'sae' ),
 
 				// Settings
-				'type'            => 'tiny_mce',
+				'type'            => 'text',
 
 				// Category & Location
 				'option_category' => 'basic_option',
@@ -277,9 +277,9 @@ class SAE_Image extends SAE_Builder_Module {
 		$rendered_image_classnames = implode( ' ', $image_classnames );
 
 		// Caption configuration
-		$caption = '' === $this->content ? '' : sprintf(
+		$caption = '' === $this->props['caption'] ? '' : sprintf(
 			'<figcaption class="sae-image-caption">%1$s</figcaption>',
-			et_core_sanitized_previously( $this->content )
+			et_core_sanitized_previously( $this->props['caption'] )
 		);
 
 		// Set styles
@@ -295,7 +295,7 @@ class SAE_Image extends SAE_Builder_Module {
 				</figure>
 			</div>',
 			esc_attr( $src ),
-			esc_attr( wp_strip_all_tags( $this->content ) ),
+			esc_attr( $this->props['caption'] ),
 			esc_attr( $rendered_image_classnames ),
 			et_core_sanitized_previously( $rendered_image_data_attrs ),
 			et_core_sanitized_previously( $caption )

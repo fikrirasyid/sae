@@ -1,5 +1,8 @@
 // External Dependencies
 import React, { Component } from 'react';
+import {
+  get,
+} from 'lodash';
 
 // Internal Dependencies
 import saeUtils from '../../saeUtils';
@@ -60,8 +63,8 @@ class SaeImage extends Component {
    * Module render in VB
    */
   render() {
-    const caption = '' === this.props.content() ? false : <figcaption className="sae-image-caption">
-      {this.props.content()}
+    const caption = '' === get(this.props, 'caption', '') ? false : <figcaption className="sae-image-caption">
+      {get(this.props, 'caption', '')}
     </figcaption>;
 
     return (

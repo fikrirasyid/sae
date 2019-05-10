@@ -1,3 +1,16 @@
 .sae_image .sae-image-wrapper figure {
 	margin: 0;
 }
+
+.sae-image-caption {
+	display: block;
+	font-size: 12px;
+	padding: 10px;
+	line-height: 1.4em;
+	color: rgba(150, 150, 150, 0.8);
+
+	/* Builder's border defaults compatibility*/
+	border-width: 0px;
+	border-color: #333333;
+	border-style: solid;
+}
