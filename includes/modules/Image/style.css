@@ -1,3 +1,7 @@
+.sae_image {
+	line-height: 0;
+}
+
 .sae_image .sae-image-wrapper figure {
 	margin: 0;
 }
